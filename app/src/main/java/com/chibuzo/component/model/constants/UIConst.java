@@ -1,8 +1,8 @@
 package com.chibuzo.component.model.constants;
 
 public class UIConst {
-    public static final int WIDE_COMPONENT_TYPE = 0;
-    public static final int NARROW_COMPONENT_TYPE = 1;
+    public static final int WIDE_COMPONENT_SIZE = 0;
+    public static final int NARROW_COMPONENT_SIZE = 1;
 
     public static final int FRAMELAYOUT_LAYOUT_TYPE = 0;
     public static final int LINEARLAYOUT_LAYOUT_TYPE = 1;

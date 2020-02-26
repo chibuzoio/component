@@ -1,7 +1,6 @@
 package com.chibuzo.component.uicomponent;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -11,15 +10,14 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.chibuzo.component.model.constants.UIConst;
 import com.chibuzo.component.uiinterface.UIComponent;
-import com.chibuzo.component.uiinterface.UILayout;
 import com.chibuzo.component.uilayout.UIFrameLayout;
 import com.chibuzo.component.utility.AU;
 
 public class UIButton extends AppCompatButton implements UIComponent {
     private Context context;
-    private UILayout uiLayout;
     private ViewGroup viewGroup;
-    private int layoutType, layoutParamsType;
+    private ViewGroup uiComponentLayout;
+    private int layoutType, layoutParamsType, uiComponentType;
     private int marginTop, marginLeft, marginRight, marginBottom;
     private int paddingTop, paddingLeft, paddingRight, paddingBottom;
 
@@ -31,7 +29,9 @@ public class UIButton extends AppCompatButton implements UIComponent {
         this.viewGroup = viewGroup;
         this.context = viewGroup.getContext();
 
-        setUiLayout(viewGroup);
+        setUIParentLayout(viewGroup);
+        setLayoutType(viewGroup);
+        setUIComponentType(UIConst.WIDE_COMPONENT_SIZE);
 
         marginTop = AU.dimen(context, 7);
         marginLeft = AU.dimen(context, 7);
@@ -47,13 +47,20 @@ public class UIButton extends AppCompatButton implements UIComponent {
         setUIPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
     }
 
-    public UILayout getUiLayout() {
-        return uiLayout;
+    @Override
+    public ViewGroup getUIComponentLayout() {
+        return uiComponentLayout;
     }
 
-    public void setUiLayout(ViewGroup viewGroup) {
+    @Override
+    public int getUIComponentType() {
+        return uiComponentType;
+    }
+
+    @Override
+    public void setUIComponentLayout(ViewGroup viewGroup) {
         if (viewGroup instanceof FrameLayout) {
-            uiLayout = (UIFrameLayout) viewGroup;
+            uiComponentLayout = (UIFrameLayout) viewGroup;
         } else if (viewGroup instanceof LinearLayout) {
 
         } else if (viewGroup instanceof RelativeLayout) {
@@ -117,8 +124,82 @@ public class UIButton extends AppCompatButton implements UIComponent {
         return layoutParamsType;
     }
 
+    @Override
+    public int getUILayoutType() {
+        return 0;
+    }
+
+    @Override
+    public ViewGroup getUILayout() {
+        return null;
+    }
+
+    @Override
+    public int getUIComponentSize() {
+        return 0;
+    }
+
+    @Override
+    public int getUILayoutParamsType() {
+        return 0;
+    }
+
+    @Override
+    public int getUIParentLayoutType() {
+        return 0;
+    }
+
+    @Override
+    public ViewGroup getUIParentLayout() {
+        return null;
+    }
+
     public void setLayoutParamsType(int layoutParamsType) {
         this.layoutParamsType = layoutParamsType;
+    }
+
+    @Override
+    public void setUIParentLayout(ViewGroup uiParentLayout) {
+        ViewGroup.LayoutParams uiButtonLayoutParams;
+
+        switch (getUIComponentLayout().getLayoutType()) {
+            case UIConst.LINEARLAYOUT_LAYOUT_TYPE:
+                uiButtonLayoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                ((LinearLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setLayoutType(UIConst.LINEARLAYOUT_LAYOUT_TYPE);
+                break;
+            case UIConst.RELATIVELAYOUT_LAYOUT_TYPE:
+                uiButtonLayoutParams = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                ((RelativeLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setLayoutType(UIConst.RELATIVELAYOUT_LAYOUT_TYPE);
+                break;
+            case UIConst.FRAMELAYOUT_LAYOUT_TYPE:
+            default:
+                uiButtonLayoutParams = new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+
+                ((FrameLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setLayoutType(UIConst.FRAMELAYOUT_LAYOUT_TYPE);
+        }
+    }
+
+    @Override
+    public void setUILayoutParamsType(int layoutParamsType) {
+
+    }
+
+    @Override
+    public void setUIParentLayoutType(int uiParentLayoutType) {
+
+    }
+
+    @Override
+    public void setUIComponentType(int uiComponentType) {
+        this.uiComponentType = uiComponentType;
     }
 
     public UIComponent setUIMarginBottom(int bottom) {
@@ -153,7 +234,7 @@ public class UIButton extends AppCompatButton implements UIComponent {
         marginRight = AU.dimen(context, right);
         marginBottom = AU.dimen(context, bottom);
 
-        switch (getUiLayout().getLayoutType()) {
+        switch (getUIComponentLayout().getLayoutType()) {
             case UIConst.LINEARLAYOUT_LAYOUT_TYPE:
                 uiButtonLayoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -179,7 +260,7 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
         setLayoutParamsType(UIConst.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
         setLayoutParams(uiButtonLayoutParams);
-
+agrwhdf
         return this;
     }
 
@@ -187,6 +268,11 @@ public class UIButton extends AppCompatButton implements UIComponent {
         paddingBottom = AU.dimen(context, bottom);
         super.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         return this;
+    }
+
+    @Override
+    public void setUIComponentSize(int uiComponentSize) {
+
     }
 
     public UIComponent setUIPaddingRight(int right) {
@@ -199,6 +285,46 @@ public class UIButton extends AppCompatButton implements UIComponent {
         paddingLeft = AU.dimen(context, left);
         super.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         return this;
+    }
+
+    @Override
+    public void setUILayout(ViewGroup uiLayout) {
+
+    }
+
+    @Override
+    public void setUILayoutType(int layoutType) {
+
+    }
+
+    public void setLayoutType(ViewGroup viewGroup) {
+        ViewGroup.LayoutParams uiButtonLayoutParams;
+gadgshhsd
+        switch (getUIComponentLayout().getLayoutType()) {
+            case UIConst.LINEARLAYOUT_LAYOUT_TYPE:
+                uiButtonLayoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                ((LinearLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setLayoutType(UIConst.LINEARLAYOUT_LAYOUT_TYPE);
+                break;
+            case UIConst.RELATIVELAYOUT_LAYOUT_TYPE:
+                uiButtonLayoutParams = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                ((RelativeLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setLayoutType(UIConst.RELATIVELAYOUT_LAYOUT_TYPE);
+                break;
+            case UIConst.FRAMELAYOUT_LAYOUT_TYPE:
+            default:
+                uiButtonLayoutParams = new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+
+                ((FrameLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setLayoutType(UIConst.FRAMELAYOUT_LAYOUT_TYPE);
+        }
+
+        setLayoutParamsType(UIConst.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
     }
 
     public UIComponent setUIPaddingTop(int top) {
