@@ -10,8 +10,8 @@ import com.chibuzo.component.model.constants.UIConst;
 import com.chibuzo.component.uiinterface.UIComponent;
 
 public class UIFrameLayout extends FrameLayout implements UIComponent {
-    private int layoutType;
     private int layoutParamsType;
+    private int layoutType, uiParentSize;
 
     public UIFrameLayout(@NonNull Context context) {
         super(context);
@@ -20,6 +20,7 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 
         setLayoutParamsType(UIConst.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
+        setUIComponentSize(UIConst.WIDE_COMPONENT_SIZE);
         setLayoutType(UIConst.FRAMELAYOUT_LAYOUT_TYPE);
         setLayoutParams(frameLayoutParams);
     }
@@ -57,6 +58,11 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     }
 
     @Override
+    public void setUIParentLayoutType(ViewGroup uiParentLayoutType) {
+
+    }
+
+    @Override
     public UIComponent setUIMargin(int left, int top, int right, int bottom) {
         return null;
     }
@@ -73,6 +79,11 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     @Override
     public int getUILayoutType() {
         return 0;
+    }
+
+    @Override
+    public int getUIParentSize() {
+        return uiParentSize;
     }
 
     @Override
@@ -116,6 +127,11 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     }
 
     @Override
+    public void setUIParentSize(int uiParentSize) {
+        this.uiParentSize = uiParentSize;
+    }
+
+    @Override
     public UIComponent setUIPaddingLeft(int left) {
         return null;
     }
@@ -138,6 +154,11 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     @Override
     public UIComponent setUIPaddingRight(int right) {
         return null;
+    }
+
+    @Override
+    public void setUIParentSize(ViewGroup viewGroup) {
+
     }
 
     @Override
