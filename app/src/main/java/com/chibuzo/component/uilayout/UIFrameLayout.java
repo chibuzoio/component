@@ -20,8 +20,8 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 
         setLayoutParamsType(UIConst.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
+        setUILayoutType(UIConst.FRAMELAYOUT_LAYOUT_TYPE);
         setUIComponentSize(UIConst.WIDE_COMPONENT_SIZE);
-        setLayoutType(UIConst.FRAMELAYOUT_LAYOUT_TYPE);
 
 /*
 In the child component class, first get the type of viewGroup using instanceof so that
@@ -33,14 +33,6 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
 * */
 
         setLayoutParams(frameLayoutParams);
-    }
-
-    public void setLayoutType(int layoutType) {
-        this.layoutType = layoutType;
-    }
-
-    public int getLayoutType() {
-        return layoutType;
     }
 
     public void setLayoutParamsType(int layoutParamsType) {
@@ -152,7 +144,7 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
     }
 
     @Override
-    public void setUILayoutType(int layoutType) {
+    public void setUILayoutType(int uiLayoutType) {
 
     }
 
@@ -164,6 +156,11 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
     @Override
     public UIComponent setUIPaddingRight(int right) {
         return null;
+    }
+
+    @Override
+    public void setUILayoutType(ViewGroup viewGroup) {
+
     }
 
     @Override
