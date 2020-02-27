@@ -22,6 +22,16 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
         setLayoutParamsType(UIConst.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
         setUIComponentSize(UIConst.WIDE_COMPONENT_SIZE);
         setLayoutType(UIConst.FRAMELAYOUT_LAYOUT_TYPE);
+
+/*
+In the child component class, first get the type of viewGroup using instanceof so that
+you will have to use instanceof only once
+
+void setUIParentSize(int uiParentSize); //set this here and get it in the child component
+void setUIParentLayout(ViewGroup uiParentLayout); //set here and get it in child component
+void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as to get it in the child component
+* */
+
         setLayoutParams(frameLayoutParams);
     }
 
