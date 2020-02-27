@@ -27,6 +27,7 @@ public interface UIComponent {
     void setUIParentLayout(ViewGroup uiParentLayout);
     void setUILayoutParamsType(int uiLayoutParamsType);
     void setUIParentLayoutType(int uiParentLayoutType);
+    void setParentLayoutProperties(ViewGroup viewGroup);
     void setUIParentLayoutType(ViewGroup uiParentLayoutType);
     UIComponent setUIComponentPosition(int uiComponentPosition);
     UIComponent setUIMargin(int left, int top, int right, int bottom);

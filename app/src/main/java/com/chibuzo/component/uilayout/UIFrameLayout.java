@@ -55,6 +55,11 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
     }
 
     @Override
+    public void setParentLayoutProperties(ViewGroup viewGroup) {
+
+    }
+
+    @Override
     public UIComponent setUIComponentPosition(int buttonPosition) {
         return null;
     }
