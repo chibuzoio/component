@@ -6,7 +6,9 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
-import com.chibuzo.component.model.constants.UIConst;
+import com.chibuzo.component.model.constants.UIComponentParams;
+import com.chibuzo.component.model.constants.UIComponentSize;
+import com.chibuzo.component.model.constants.UILayoutType;
 import com.chibuzo.component.uiinterface.UIComponent;
 
 public class UIFrameLayout extends FrameLayout implements UIComponent {
@@ -19,9 +21,9 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
         FrameLayout.LayoutParams frameLayoutParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 
-        setLayoutParamsType(UIConst.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
-        setUILayoutType(UIConst.FRAMELAYOUT_LAYOUT_TYPE);
-        setUIComponentSize(UIConst.WIDE_COMPONENT_SIZE);
+        setLayoutParamsType(UIComponentParams.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
+        setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
+        setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
 
 /*
 In the child component class, first get the type of viewGroup using instanceof so that

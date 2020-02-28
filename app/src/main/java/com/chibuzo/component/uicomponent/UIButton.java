@@ -8,7 +8,10 @@ import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.chibuzo.component.model.constants.UIConst;
+import com.chibuzo.component.model.constants.UIComponentParams;
+import com.chibuzo.component.model.constants.UIComponentPosition;
+import com.chibuzo.component.model.constants.UIComponentSize;
+import com.chibuzo.component.model.constants.UILayoutType;
 import com.chibuzo.component.uiinterface.UIComponent;
 import com.chibuzo.component.uilayout.UIFrameLayout;
 import com.chibuzo.component.utility.AU;
@@ -40,10 +43,10 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
         setUIText("Submit");
         setUILayoutType(viewGroup);
-        setUIComponentSize(UIConst.WIDE_COMPONENT_SIZE);
+        setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
         setUIMargin(marginLeft, marginTop, marginRight, marginBottom);
-        setUILayoutParamsType(UIConst.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
         setUIPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
     }
 
     /*
@@ -57,31 +60,31 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
 
         switch (uiComponentPosition) {
-            case UIConst.LEFT_COMPONENT_POSITION:
+            case UIComponentPosition.LEFT_COMPONENT_POSITION:
 
                 break;
-            case UIConst.CENTER_COMPONENT_POSITION:
+            case UIComponentPosition.CENTER_COMPONENT_POSITION:
 
                 break;
-            case UIConst.RIGHT_COMPONENT_POSITION:
+            case UIComponentPosition.RIGHT_COMPONENT_POSITION:
 
                 break;
-            case UIConst.LEFT_TOP_COMPONENT_POSITION:
+            case UIComponentPosition.LEFT_TOP_COMPONENT_POSITION:
 
                 break;
-            case UIConst.CENTER_TOP_COMPONENT_POSITION:
+            case UIComponentPosition.CENTER_TOP_COMPONENT_POSITION:
 
                 break;
-            case UIConst.RIGHT_TOP_COMPONENT_POSITION:
+            case UIComponentPosition.RIGHT_TOP_COMPONENT_POSITION:
 
                 break;
-            case UIConst.LEFT_BOTTOM_COMPONENT_POSITION:
+            case UIComponentPosition.LEFT_BOTTOM_COMPONENT_POSITION:
 
                 break;
-                case UIConst.CENTER_BOTTOM_COMPONENT_POSITION:
+                case UIComponentPosition.CENTER_BOTTOM_COMPONENT_POSITION:
 
                 break;
-            case UIConst.RIGHT_BOTTOM_COMPONENT_POSITION:
+            case UIComponentPosition.RIGHT_BOTTOM_COMPONENT_POSITION:
 
                 break;
                 default:
@@ -94,11 +97,11 @@ public class UIButton extends AppCompatButton implements UIComponent {
     @Override
     public void setUIParentLayoutType(ViewGroup viewGroup) {
         if (viewGroup instanceof FrameLayout) {
-            this.uiParentLayoutType = UIConst.FRAMELAYOUT_LAYOUT_TYPE;
+            this.uiParentLayoutType = UILayoutType.FRAMELAYOUT_LAYOUT_TYPE;
         } else if (viewGroup instanceof LinearLayout) {
-            this.uiParentLayoutType = UIConst.LINEARLAYOUT_LAYOUT_TYPE;
+            this.uiParentLayoutType = UILayoutType.LINEARLAYOUT_LAYOUT_TYPE;
         } else if (viewGroup instanceof RelativeLayout) {
-            this.uiParentLayoutType = UIConst.RELATIVELAYOUT_LAYOUT_TYPE;
+            this.uiParentLayoutType = UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE;
         }
     }
 
@@ -206,19 +209,19 @@ public class UIButton extends AppCompatButton implements UIComponent {
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             ((LinearLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-            setUILayoutType(UIConst.LINEARLAYOUT_LAYOUT_TYPE);
+            setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
         } else if (getUIParentLayout() instanceof RelativeLayout) {
             uiButtonLayoutParams = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
             ((RelativeLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-            setUILayoutType(UIConst.RELATIVELAYOUT_LAYOUT_TYPE);
+            setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
         } else {
             uiButtonLayoutParams = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
             ((FrameLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-            setUILayoutType(UIConst.FRAMELAYOUT_LAYOUT_TYPE);
+            setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
         }
 
         setLayoutParams(uiButtonLayoutParams);
@@ -253,17 +256,17 @@ public class UIButton extends AppCompatButton implements UIComponent {
             uiButtonLayoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            setUILayoutType(UIConst.LINEARLAYOUT_LAYOUT_TYPE);
+            setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
         } else if (getUIParentLayout() instanceof RelativeLayout) {
             uiButtonLayoutParams = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-            setUILayoutType(UIConst.RELATIVELAYOUT_LAYOUT_TYPE);
+            setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
         } else {
             uiButtonLayoutParams = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
-            setUILayoutType(UIConst.FRAMELAYOUT_LAYOUT_TYPE);
+            setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
         }
 
         setLayoutParams(uiButtonLayoutParams);
