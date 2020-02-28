@@ -94,7 +94,7 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
     }
 
     @Override
-    public ViewGroup getUILayout() {
+    public ViewGroup getUIComponentLayout() {
         return null;
     }
 
@@ -144,7 +144,7 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
     }
 
     @Override
-    public void setUILayout(ViewGroup uiLayout) {
+    public void setUIComponentLayout(ViewGroup uiLayout) {
 
     }
 

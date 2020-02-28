@@ -16,8 +16,8 @@ import com.chibuzo.component.utility.AU;
 public class UIButton extends AppCompatButton implements UIComponent {
     private Context context;
     private ViewGroup uiComponentLayout, uiParentLayout;
+    private int uiLayoutType, uiLayoutParamsType, uiParentLayoutType;
     private int marginTop, marginLeft, marginRight, marginBottom, uiParentSize;
-    private int uiLayoutType, uiLayoutParamsType, uiComponentType, uiParentLayoutType;
     private int paddingTop, paddingLeft, paddingRight, paddingBottom, uiComponentSize;
 
     public UIButton(ViewGroup viewGroup) {
@@ -104,7 +104,7 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public int getUILayoutType() {
-        return 0;
+        return uiLayoutType;
     }
 
     @Override
@@ -113,13 +113,13 @@ public class UIButton extends AppCompatButton implements UIComponent {
     }
 
     @Override
-    public ViewGroup getUILayout() {
-        return null;
+    public ViewGroup getUIComponentLayout() {
+        return uiComponentLayout;
     }
 
     @Override
     public int getUIComponentSize() {
-        return 0;
+        return uiComponentSize;
     }
 
     @Override
@@ -288,8 +288,8 @@ public class UIButton extends AppCompatButton implements UIComponent {
     }
 
     @Override
-    public void setUILayout(ViewGroup uiLayout) {
-
+    public void setUIComponentLayout(ViewGroup uiComponentLayout) {
+        this.uiComponentLayout = uiComponentLayout;
     }
 
     @Override
