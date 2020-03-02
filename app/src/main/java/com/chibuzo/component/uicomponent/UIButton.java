@@ -56,11 +56,11 @@ public class UIButton extends AppCompatButton implements UIComponent {
     * */
     @Override
     public UIComponent setUIComponentPosition(int uiComponentPosition) {
-        // first set button wrap content for height and width
-
+        setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
 
         switch (uiComponentPosition) {
             case UIComponentPosition.LEFT_COMPONENT_POSITION:
+                // get dimensions of the parent layout and check its position relative to the parent layout
 
                 break;
             case UIComponentPosition.CENTER_COMPONENT_POSITION:
@@ -87,8 +87,9 @@ public class UIButton extends AppCompatButton implements UIComponent {
             case UIComponentPosition.RIGHT_BOTTOM_COMPONENT_POSITION:
 
                 break;
-                default:
-                    // make it left button
+            case UIComponentPosition.DEFAULT_COMPONENT_POSITION:
+            default:
+                // make it left button
         }
 
         return this;
@@ -204,24 +205,46 @@ public class UIButton extends AppCompatButton implements UIComponent {
         marginRight = AU.dimen(context, right);
         marginBottom = AU.dimen(context, bottom);
 
-        if (getUIParentLayout() instanceof LinearLayout) {
-            uiButtonLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        if (getUIComponentSize() == UIComponentSize.WIDE_COMPONENT_SIZE) {
+            if (getUIParentLayout() instanceof LinearLayout) {
+                uiButtonLayoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            ((LinearLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-            setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
-        } else if (getUIParentLayout() instanceof RelativeLayout) {
-            uiButtonLayoutParams = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                ((LinearLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
+            } else if (getUIParentLayout() instanceof RelativeLayout) {
+                uiButtonLayoutParams = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-            ((RelativeLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-            setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
+                ((RelativeLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
+            } else {
+                uiButtonLayoutParams = new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+
+                ((FrameLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
+            }
         } else {
-            uiButtonLayoutParams = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            if (getUIParentLayout() instanceof LinearLayout) {
+                uiButtonLayoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            ((FrameLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-            setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
+                ((LinearLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
+            } else if (getUIParentLayout() instanceof RelativeLayout) {
+                uiButtonLayoutParams = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                ((RelativeLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
+            } else {
+                uiButtonLayoutParams = new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+
+                ((FrameLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
+            }
         }
 
         setLayoutParams(uiButtonLayoutParams);
@@ -238,6 +261,42 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public void setUIComponentSize(int uiComponentSize) {
+        switch (getUILayoutType()) {
+            case UILayoutType.LINEARLAYOUT_LAYOUT_TYPE:
+                if (uiComponentSize == UIComponentSize.NARROW_COMPONENT_SIZE) {
+                    LinearLayout.LayoutParams uiComponentSizeParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    setLayoutParams(uiComponentSizeParams);
+                } else if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
+                    LinearLayout.LayoutParams uiComponentSizeParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    setLayoutParams(uiComponentSizeParams);
+                }
+                break;
+            case UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE:
+                if (uiComponentSize == UIComponentSize.NARROW_COMPONENT_SIZE) {
+                    RelativeLayout.LayoutParams uiComponentSizeParams = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    setLayoutParams(uiComponentSizeParams);
+                } else if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
+                    RelativeLayout.LayoutParams uiComponentSizeParams = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    setLayoutParams(uiComponentSizeParams);
+                }
+                break;
+            case UILayoutType.FRAMELAYOUT_LAYOUT_TYPE:
+            default:
+                if (uiComponentSize == UIComponentSize.NARROW_COMPONENT_SIZE) {
+                    FrameLayout.LayoutParams uiComponentSizeParams = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                    setLayoutParams(uiComponentSizeParams);
+                } else if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
+                    FrameLayout.LayoutParams uiComponentSizeParams = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                    setLayoutParams(uiComponentSizeParams);
+                }
+        }
+
         this.uiComponentSize = uiComponentSize;
     }
 
