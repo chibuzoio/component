@@ -1,17 +1,13 @@
 package com.chibuzo.component.uicomponent;
 
 import android.content.Context;
-import android.graphics.Rect;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.content.ContextCompat;
 
-import com.chibuzo.component.R;
 import com.chibuzo.component.model.constants.UIComponentParams;
 import com.chibuzo.component.model.constants.UIComponentPosition;
 import com.chibuzo.component.model.constants.UIComponentSize;
@@ -19,7 +15,6 @@ import com.chibuzo.component.model.constants.UILayoutType;
 import com.chibuzo.component.uiinterface.UIComponent;
 import com.chibuzo.component.uilayout.UIFrameLayout;
 import com.chibuzo.component.utility.AU;
-import com.chibuzo.component.utility.Utility;
 
 public class UIButton extends AppCompatButton implements UIComponent {
     private Context context;
@@ -37,10 +32,10 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
         setParentLayoutProperties(viewGroup);
 
-        marginTop = AU.dimen(context, 7);
-        marginLeft = AU.dimen(context, 7);
-        marginRight = AU.dimen(context, 7);
-        marginBottom = AU.dimen(context, 7);
+        marginTop = AU.dimen(context, 0);
+        marginLeft = AU.dimen(context, 0);
+        marginRight = AU.dimen(context, 0);
+        marginBottom = AU.dimen(context, 0);
         paddingTop = AU.dimen(context, 7);
         paddingLeft = AU.dimen(context, 7);
         paddingRight = AU.dimen(context, 7);
@@ -49,7 +44,7 @@ public class UIButton extends AppCompatButton implements UIComponent {
         setUIText("Submit");
         setUILayoutType(viewGroup);
         setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
-        setUIMargin(marginLeft, marginTop, marginRight, marginBottom);
+        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
         setUIPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
     }
@@ -70,38 +65,50 @@ public class UIButton extends AppCompatButton implements UIComponent {
             case UIComponentPosition.VERTICAL_LEFT:
                 marginTop = relativeBottom / 2;
                 setMarginBase(0, marginTop, 0, 0);
+                this.marginTop = marginTop;
                 break;
             case UIComponentPosition.CENTER:
                 marginTop = relativeBottom / 2;
                 marginLeft = relativeRight / 2;
                 setMarginBase(marginLeft, marginTop, 0, 0);
+                this.marginLeft = marginLeft;
+                this.marginTop = marginTop;
                 break;
             case UIComponentPosition.VERTICAL_RIGHT:
                 marginLeft = relativeRight;
                 marginTop = relativeBottom / 2;
                 setMarginBase(marginLeft, marginTop, 0, 0);
+                this.marginLeft = marginLeft;
+                this.marginTop = marginTop;
                 break;
             case UIComponentPosition.TOP_CENTER:
                 marginLeft = relativeRight / 2;
                 setMarginBase(marginLeft, 0, 0, 0);
+                this.marginLeft = marginLeft;
                 break;
             case UIComponentPosition.TOP_RIGHT:
                 marginLeft = relativeRight;
                 setMarginBase(marginLeft, 0, 0, 0);
+                this.marginLeft = marginLeft;
                 break;
             case UIComponentPosition.BOTTOM_LEFT:
                 marginTop = relativeBottom;
                 setMarginBase(0, marginTop, 0, 0);
+                this.marginTop = marginTop;
                 break;
             case UIComponentPosition.BOTTOM_CENTER:
                 marginTop = relativeBottom;
                 marginLeft = relativeRight / 2;
                 setMarginBase(marginLeft, marginTop, 0, 0);
+                this.marginLeft = marginLeft;
+                this.marginTop = marginTop;
                 break;
             case UIComponentPosition.BOTTOM_RIGHT:
                 marginTop = relativeBottom;
                 marginLeft = relativeRight;
                 setMarginBase(marginLeft, marginTop, 0, 0);
+                this.marginLeft = marginLeft;
+                this.marginTop = marginTop;
                 break;
             case UIComponentPosition.DEFAULT:
             case UIComponentPosition.TOP_LEFT:
@@ -160,8 +167,12 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public void resetComponentPosition() {
+        marginTop = AU.dimen(getContext(), 0);
+        marginLeft = AU.dimen(getContext(), 0);
+        marginRight = AU.dimen(getContext(), 0);
+        marginBottom = AU.dimen(getContext(), 0);
         setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
-        setUIMargin(0, 0, 0, 0);
+        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
     }
 
     @Override
@@ -188,22 +199,22 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public UIComponent setUIMarginBottom(int bottom) {
-        marginBottom = AU.dimen(context, bottom);
-        setUIMargin(marginLeft, marginTop, marginRight, marginBottom);
+        marginBottom = marginBottom + AU.dimen(context, bottom);
+        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
         return this;
     }
 
     @Override
     public UIComponent setUIMarginRight(int right) {
-        marginRight = AU.dimen(context, right);
-        setUIMargin(marginLeft, marginTop, marginRight, marginBottom);
+        marginRight = marginRight + AU.dimen(context, right);
+        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
         return this;
     }
 
     @Override
     public UIComponent setUIMarginLeft(int left) {
-        marginLeft = AU.dimen(context, left);
-        setUIMargin(marginLeft, marginTop, marginRight, marginBottom);
+        marginLeft = marginLeft + AU.dimen(context, left);
+        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
         return this;
     }
 
@@ -214,17 +225,17 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public UIComponent setUIMarginTop(int top) {
-        marginTop = AU.dimen(context, top);
-        setUIMargin(marginLeft, marginTop, marginRight, marginBottom);
+        marginTop = marginTop + AU.dimen(context, top);
+        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
         return this;
     }
 
     @Override
     public UIComponent setUIMargin(int left, int top, int right, int bottom) {
-        marginTop = AU.dimen(context, top);
-        marginLeft = AU.dimen(context, left);
-        marginRight = AU.dimen(context, right);
-        marginBottom = AU.dimen(context, bottom);
+        marginTop = marginTop + AU.dimen(context, top);
+        marginLeft = marginLeft + AU.dimen(context, left);
+        marginRight = marginRight + AU.dimen(context, right);
+        marginBottom = marginBottom + AU.dimen(context, bottom);
 
         setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
 

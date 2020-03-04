@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(uiFrameLayout);
 
         UIButton uiButton = new UIButton(uiFrameLayout);
-        uiButton.setUIMargin(23, 23, 23, 23);
+//        uiButton.setUIMargin(23, 23, 23, 23);
         uiButton.setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
 
-        uiButton.setUIMargin(111, 0, 0, 0);
+//        uiButton.setUIMargin(111, 0, 0, 0);
         uiButton.resetComponentPosition();
 
         // Put any code you want to run after complete
@@ -53,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
             Log.e("horizontalTotal", "horizontalTotal value here is " + horizontalTotal);
 
             uiButton.setUIComponentPosition(UIComponentPosition.VERTICAL_RIGHT);
+
+            // set and get previous margin for addition and multiplication
+            uiButton.setUIMargin(0, 223, 0, 0);
+            uiButton.setUIMargin(0, -223, 0, 0);
 
             if (deviceDisplayHeight > deviceDisplayWidth) { // Vertical Alignment
 
