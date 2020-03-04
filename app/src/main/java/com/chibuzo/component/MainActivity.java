@@ -6,15 +6,14 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.chibuzo.component.model.constants.UIComponentPosition;
 import com.chibuzo.component.model.constants.UIComponentSize;
 import com.chibuzo.component.uicomponent.UIButton;
 import com.chibuzo.component.uilayout.UIFrameLayout;
 import com.chibuzo.component.utility.Utility;
 
 public class MainActivity extends AppCompatActivity {
-    private int deviceDisplayWidth;
-    private int deviceDisplayHeight;
-
+    private int deviceDisplayWidth, deviceDisplayHeight;
     private int screenWidth, buttonWidth, buttonLeft, buttonRight, horizontalTotal;
 
     @Override
@@ -35,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
         uiButton.setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
 
         uiButton.setUIMargin(111, 0, 0, 0);
+        uiButton.resetComponentPosition();
 
-        uiFrameLayout.setOnClickListener((view) -> {
+        // Put any code you want to run after complete
+        // rendering of the UI inside this construct
+        getWindow().getDecorView().post(() -> {
             screenWidth = deviceDisplayWidth;
 
             buttonWidth = uiButton.getWidth();
@@ -49,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
             Log.e("buttonWidth", "buttonWidth value here is " + buttonWidth);
             Log.e("screenWidth", "screenWidth value here is " + screenWidth);
             Log.e("horizontalTotal", "horizontalTotal value here is " + horizontalTotal);
+
+            uiButton.setUIComponentPosition(UIComponentPosition.VERTICAL_RIGHT);
+
+            if (deviceDisplayHeight > deviceDisplayWidth) { // Vertical Alignment
+
+            } else if (deviceDisplayWidth > deviceDisplayHeight) { // Horizontal alignment
+
+            }
         });
     }
 }

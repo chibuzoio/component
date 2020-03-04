@@ -121,6 +121,11 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
     }
 
     @Override
+    public void resetComponentPosition() {
+
+    }
+
+    @Override
     public UIComponent setUIMarginTop(int top) {
         return null;
     }

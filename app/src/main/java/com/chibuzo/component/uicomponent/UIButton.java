@@ -1,13 +1,17 @@
 package com.chibuzo.component.uicomponent;
 
 import android.content.Context;
+import android.graphics.Rect;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 
+import com.chibuzo.component.R;
 import com.chibuzo.component.model.constants.UIComponentParams;
 import com.chibuzo.component.model.constants.UIComponentPosition;
 import com.chibuzo.component.model.constants.UIComponentSize;
@@ -15,6 +19,7 @@ import com.chibuzo.component.model.constants.UILayoutType;
 import com.chibuzo.component.uiinterface.UIComponent;
 import com.chibuzo.component.uilayout.UIFrameLayout;
 import com.chibuzo.component.utility.AU;
+import com.chibuzo.component.utility.Utility;
 
 public class UIButton extends AppCompatButton implements UIComponent {
     private Context context;
@@ -49,47 +54,59 @@ public class UIButton extends AppCompatButton implements UIComponent {
         setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
     }
 
-    /*
-    * wrap content both horizontally and vertically. Then, use
-    * padding to add weight and size to the button. Use gravity to
-    * position the button left, right, center, top or bottom
-    * */
     @Override
     public UIComponent setUIComponentPosition(int uiComponentPosition) {
-        setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
+        resetComponentPosition();
+
+        int marginTop, marginLeft;
+        int childWidth = getWidth();
+        int childHeight = getHeight();
+        int parentWidth = ((ViewGroup) getParent()).getWidth();
+        int parentHeight = ((ViewGroup) getParent()).getHeight();
+        int relativeRight = parentWidth - childWidth;
+        int relativeBottom = parentHeight - childHeight;
 
         switch (uiComponentPosition) {
-            case UIComponentPosition.LEFT_COMPONENT_POSITION:
-                // get dimensions of the parent layout and check its position relative to the parent layout
-
+            case UIComponentPosition.VERTICAL_LEFT:
+                marginTop = relativeBottom / 2;
+                setMarginBase(0, marginTop, 0, 0);
                 break;
-            case UIComponentPosition.CENTER_COMPONENT_POSITION:
-
+            case UIComponentPosition.CENTER:
+                marginTop = relativeBottom / 2;
+                marginLeft = relativeRight / 2;
+                setMarginBase(marginLeft, marginTop, 0, 0);
                 break;
-            case UIComponentPosition.RIGHT_COMPONENT_POSITION:
-
+            case UIComponentPosition.VERTICAL_RIGHT:
+                marginLeft = relativeRight;
+                marginTop = relativeBottom / 2;
+                setMarginBase(marginLeft, marginTop, 0, 0);
                 break;
-            case UIComponentPosition.LEFT_TOP_COMPONENT_POSITION:
-
+            case UIComponentPosition.TOP_CENTER:
+                marginLeft = relativeRight / 2;
+                setMarginBase(marginLeft, 0, 0, 0);
                 break;
-            case UIComponentPosition.CENTER_TOP_COMPONENT_POSITION:
-
+            case UIComponentPosition.TOP_RIGHT:
+                marginLeft = relativeRight;
+                setMarginBase(marginLeft, 0, 0, 0);
                 break;
-            case UIComponentPosition.RIGHT_TOP_COMPONENT_POSITION:
-
+            case UIComponentPosition.BOTTOM_LEFT:
+                marginTop = relativeBottom;
+                setMarginBase(0, marginTop, 0, 0);
                 break;
-            case UIComponentPosition.LEFT_BOTTOM_COMPONENT_POSITION:
-
+            case UIComponentPosition.BOTTOM_CENTER:
+                marginTop = relativeBottom;
+                marginLeft = relativeRight / 2;
+                setMarginBase(marginLeft, marginTop, 0, 0);
                 break;
-                case UIComponentPosition.CENTER_BOTTOM_COMPONENT_POSITION:
-
+            case UIComponentPosition.BOTTOM_RIGHT:
+                marginTop = relativeBottom;
+                marginLeft = relativeRight;
+                setMarginBase(marginLeft, marginTop, 0, 0);
                 break;
-            case UIComponentPosition.RIGHT_BOTTOM_COMPONENT_POSITION:
-
-                break;
-            case UIComponentPosition.DEFAULT_COMPONENT_POSITION:
+            case UIComponentPosition.DEFAULT:
+            case UIComponentPosition.TOP_LEFT:
             default:
-                // make it left button
+                resetComponentPosition();
         }
 
         return this;
@@ -139,6 +156,12 @@ public class UIButton extends AppCompatButton implements UIComponent {
     @Override
     public ViewGroup getUIParentLayout() {
         return uiParentLayout;
+    }
+
+    @Override
+    public void resetComponentPosition() {
+        setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
+        setUIMargin(0, 0, 0, 0);
     }
 
     @Override
@@ -198,12 +221,18 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public UIComponent setUIMargin(int left, int top, int right, int bottom) {
-        ViewGroup.LayoutParams uiButtonLayoutParams;
-
         marginTop = AU.dimen(context, top);
         marginLeft = AU.dimen(context, left);
         marginRight = AU.dimen(context, right);
         marginBottom = AU.dimen(context, bottom);
+
+        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
+
+        return this;
+    }
+
+    private void setMarginBase(int marginLeft, int marginTop, int marginRight, int marginBottom) {
+        ViewGroup.LayoutParams uiButtonLayoutParams;
 
         if (getUIComponentSize() == UIComponentSize.WIDE_COMPONENT_SIZE) {
             if (getUIParentLayout() instanceof LinearLayout) {
@@ -248,8 +277,6 @@ public class UIButton extends AppCompatButton implements UIComponent {
         }
 
         setLayoutParams(uiButtonLayoutParams);
-
-        return this;
     }
 
     @Override
