@@ -40,11 +40,6 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
     }
 
     @Override
-    public void setUIParentLayout(ViewGroup uiParentLayout) {
-
-    }
-
-    @Override
     public void setUILayoutParamsType(int uiLayoutParamsType) {
         this.uiLayoutParamsType = uiLayoutParamsType;
     }

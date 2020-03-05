@@ -14,16 +14,16 @@ import com.chibuzo.component.uilayout.UIFrameLayout;
 import com.chibuzo.component.utility.AU;
 
 public class UIComponentController {
-    private View view;
     private Context context;
-    private ViewGroup viewGroup;
+    private View uiComponentView;
+    private ViewGroup uiParentLayout;
     private com.chibuzo.component.model.UIComponent uiComponent;
 
     public UIComponentController(com.chibuzo.component.model.UIComponent uiComponent) {
         this.uiComponent = uiComponent;
-        viewGroup = uiComponent.getViewGroup();
-        view = uiComponent.getView();
-        context = view.getContext();
+        uiParentLayout = uiComponent.getUIParentLayout();
+        uiComponentView = uiComponent.getUIComponent();
+        context = uiComponentView.getContext();
     }
 
     public void setUIPadding(int left, int top, int right, int bottom) {
@@ -31,7 +31,7 @@ public class UIComponentController {
         uiComponent.setUIPaddingLeft(AU.dimen(context, left));
         uiComponent.setUIPaddingRight(AU.dimen(context, right));
         uiComponent.setUIPaddingBottom(AU.dimen(context, bottom));
-        view.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
+        uiComponentView.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
                 uiComponent.getUIPaddingRight(), uiComponent.getUIPaddingBottom());
     }
 
@@ -65,30 +65,30 @@ public class UIComponentController {
             uiComponent.setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
         }
 
-        view.setLayoutParams(layoutParams);
+        uiComponentView.setLayoutParams(layoutParams);
     }
 
     public void setUIPaddingLeft(int left) {
         uiComponent.setUIPaddingLeft(AU.dimen(context, left));
-        view.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
+        uiComponentView.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
                 uiComponent.getUIPaddingRight(), uiComponent.getUIPaddingBottom());
     }
 
     public void setUIPaddingTop(int top) {
         uiComponent.setUIPaddingTop(AU.dimen(context, top));
-        view.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
+        uiComponentView.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
                 uiComponent.getUIPaddingRight(), uiComponent.getUIPaddingBottom());
     }
 
     public void setUIPaddingBottom(int bottom) {
         uiComponent.setUIPaddingBottom(AU.dimen(context, bottom));
-        view.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
+        uiComponentView.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
                 uiComponent.getUIPaddingRight(), uiComponent.getUIPaddingBottom());
     }
 
     public void setUIPaddingRight(int right) {
         uiComponent.setUIPaddingRight(AU.dimen(context, right));
-        view.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
+        uiComponentView.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
                 uiComponent.getUIPaddingRight(), uiComponent.getUIPaddingBottom());
     }
 
@@ -136,7 +136,7 @@ public class UIComponentController {
     }
 
     public void setUIComponentSize(int uiComponentSize) {
-        if (viewGroup instanceof LinearLayout) {
+        if (uiParentLayout instanceof LinearLayout) {
             LinearLayout.LayoutParams layoutParams;
 
             if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
@@ -147,8 +147,8 @@ public class UIComponentController {
                         LinearLayout.LayoutParams.WRAP_CONTENT);
             }
 
-            view.setLayoutParams(layoutParams);
-        } else if (viewGroup instanceof RelativeLayout) {
+            uiComponentView.setLayoutParams(layoutParams);
+        } else if (uiParentLayout instanceof RelativeLayout) {
             RelativeLayout.LayoutParams layoutParams;
 
             if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
@@ -159,7 +159,7 @@ public class UIComponentController {
                         RelativeLayout.LayoutParams.WRAP_CONTENT);
             }
 
-            view.setLayoutParams(layoutParams);
+            uiComponentView.setLayoutParams(layoutParams);
         } else {
             FrameLayout.LayoutParams layoutParams;
 
@@ -171,7 +171,7 @@ public class UIComponentController {
                         FrameLayout.LayoutParams.WRAP_CONTENT);
             }
 
-            view.setLayoutParams(layoutParams);
+            uiComponentView.setLayoutParams(layoutParams);
         }
 
         uiComponent.setUIComponentSize(uiComponentSize);
@@ -191,10 +191,10 @@ public class UIComponentController {
         resetComponentPosition();
 
         int marginTop, marginLeft;
-        int childWidth = view.getWidth();
-        int childHeight = view.getHeight();
-        int parentWidth = ((ViewGroup) view.getParent()).getWidth();
-        int parentHeight = ((ViewGroup) view.getParent()).getHeight();
+        int childWidth = uiComponentView.getWidth();
+        int childHeight = uiComponentView.getHeight();
+        int parentWidth = ((ViewGroup) uiComponentView.getParent()).getWidth();
+        int parentHeight = ((ViewGroup) uiComponentView.getParent()).getHeight();
         int relativeRight = parentWidth - childWidth;
         int relativeBottom = parentHeight - childHeight;
 
@@ -258,13 +258,13 @@ public class UIComponentController {
         ViewGroup.LayoutParams layoutParams;
 
         if (uiComponent.getUIComponentSize() == UIComponentSize.WIDE_COMPONENT_SIZE) {
-            if (viewGroup instanceof LinearLayout) {
+            if (uiParentLayout instanceof LinearLayout) {
                 layoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
                 ((LinearLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
                 uiComponent.setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
-            } else if (viewGroup instanceof RelativeLayout) {
+            } else if (uiParentLayout instanceof RelativeLayout) {
                 layoutParams = new RelativeLayout.LayoutParams(
                         RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
@@ -278,13 +278,13 @@ public class UIComponentController {
                 uiComponent.setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
             }
         } else {
-            if (viewGroup instanceof LinearLayout) {
+            if (uiParentLayout instanceof LinearLayout) {
                 layoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
                 ((LinearLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
                 uiComponent.setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
-            } else if (viewGroup instanceof RelativeLayout) {
+            } else if (uiParentLayout instanceof RelativeLayout) {
                 layoutParams = new RelativeLayout.LayoutParams(
                         RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
@@ -299,7 +299,7 @@ public class UIComponentController {
             }
         }
 
-        view.setLayoutParams(layoutParams);
+        uiComponentView.setLayoutParams(layoutParams);
     }
 }
 

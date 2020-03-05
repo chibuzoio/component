@@ -18,23 +18,18 @@ import com.chibuzo.component.uilayout.UIFrameLayout;
 import com.chibuzo.component.utility.AU;
 
 public class UIButton extends AppCompatButton implements UIComponent {
-    private Context context;
-    private ViewGroup uiComponentLayout, uiParentLayout;
     private UIComponentController uiComponentController;
     private com.chibuzo.component.model.UIComponent uiComponent;
-    private int uiLayoutType, uiLayoutParamsType, uiParentLayoutType, uiParentSize;
 
     public UIButton(ViewGroup viewGroup) {
         super(viewGroup.getContext());
 
         viewGroup.addView(this);
 
-        this.context = viewGroup.getContext();
-
-        setParentLayoutProperties(viewGroup);
-
         uiComponent = new com.chibuzo.component.model.UIComponent(viewGroup, this);
         uiComponentController = new UIComponentController(uiComponent);
+
+        setParentLayoutProperties(viewGroup);
 
         setUIText("Submit");
         setUILayoutType(viewGroup);
@@ -57,58 +52,52 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public int getUILayoutType() {
-        return uiLayoutType;
+        return uiComponent.getUILayoutType();
     }
 
     @Override
     public int getUIParentSize() {
-        return uiParentSize;
+        return uiComponent.getUIParentSize();
     }
 
     @Override
     public ViewGroup getUIComponentLayout() {
-        return uiComponentLayout;
+        return uiComponent.getUIComponentLayout();
     }
 
     @Override
     public int getUIComponentSize() {
-        return uiComponentSize;
+        return uiComponent.getUIComponentSize();
     }
 
     @Override
     public int getUILayoutParamsType() {
-        return uiLayoutParamsType;
+        return uiComponent.getUILayoutParamsType();
     }
 
     @Override
     public int getUIParentLayoutType() {
-        return uiParentLayoutType;
+        return uiComponent.getUIParentLayoutType();
     }
 
     @Override
     public ViewGroup getUIParentLayout() {
-        return uiParentLayout;
-    }
-
-    @Override
-    public void setUIParentLayout(ViewGroup uiParentLayout) {
-        this.uiParentLayout = uiParentLayout;
+        return uiComponent.getUIParentLayout();
     }
 
     @Override
     public void setUILayoutParamsType(int uiLayoutParamsType) {
-        this.uiLayoutParamsType = uiLayoutParamsType;
+        uiComponent.setUILayoutParamsType(uiLayoutParamsType);
     }
 
     @Override
     public void setUIParentLayoutType(int uiParentLayoutType) {
-        this.uiParentLayoutType = uiParentLayoutType;
+        uiComponent.setUIParentLayoutType(uiParentLayoutType);
     }
 
     @Override
     public void setParentLayoutProperties(ViewGroup viewGroup) {
         setUIParentLayoutType(viewGroup);
-        setUIParentLayout(viewGroup);
         setUIParentSize(viewGroup);
     }
 
@@ -132,7 +121,7 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public void setUIParentSize(int uiParentSize) {
-        this.uiParentSize = uiParentSize;
+        uiComponent.setUIParentSize(uiParentSize);
     }
 
     @Override
@@ -182,12 +171,12 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public void setUIComponentLayout(ViewGroup uiComponentLayout) {
-        this.uiComponentLayout = uiComponentLayout;
+        uiComponent.setUIComponentLayout(uiComponentLayout);
     }
 
     @Override
     public void setUILayoutType(int uiLayoutType) {
-        this.uiLayoutType = uiLayoutType;
+        uiComponent.setUILayoutType(uiLayoutType);
     }
 
     @Override

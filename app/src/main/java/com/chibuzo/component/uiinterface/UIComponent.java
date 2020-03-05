@@ -23,7 +23,6 @@ public interface UIComponent {
     UIComponent setUIMarginBottom(int bottom);
     UIComponent setUIPaddingBottom(int bottom);
     void setUIComponentSize(int uiComponentSize);
-    void setUIParentLayout(ViewGroup uiParentLayout);
     void setUILayoutParamsType(int uiLayoutParamsType);
     void setUIParentLayoutType(int uiParentLayoutType);
     void setParentLayoutProperties(ViewGroup viewGroup);

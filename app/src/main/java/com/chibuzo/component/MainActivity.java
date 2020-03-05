@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
             // set and get previous margin for addition and multiplication
             uiButton.setUIMargin(0, 223, 0, 0);
-            uiButton.setUIMargin(0, -223, 0, 0);
+//            uiButton.setUIMargin(0, -223, 0, 0);
 
             if (deviceDisplayHeight > deviceDisplayWidth) { // Vertical Alignment
 

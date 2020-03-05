@@ -4,33 +4,42 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class UIComponent {
-    private View view;
     private int UIMarginTop;
     private int UILayoutType;
     private int UIMarginLeft;
     private int UIParentSize;
     private int UIPaddingTop;
+    private View UIComponent;
     private int UIMarginRight;
     private int UIPaddingLeft;
     private int UIPaddingRight;
     private int UIMarginBottom;
     private int UIPaddingBottom;
     private int UIComponentSize;
-    private ViewGroup viewGroup;
     private int UILayoutParamsType;
     private int UIParentLayoutType;
+    private ViewGroup UIParentLayout;
+    private ViewGroup UIComponentLayout;
 
-    public UIComponent(ViewGroup viewGroup, View view) {
-        this.viewGroup = viewGroup;
-        this.view = view;
+    public UIComponent(ViewGroup UIParentLayout, View UIComponent) {
+        this.UIParentLayout = UIParentLayout;
+        this.UIComponent = UIComponent;
     }
 
-    public View getView() {
-        return view;
+    public View getUIComponent() {
+        return UIComponent;
     }
 
-    public ViewGroup getViewGroup() {
-        return viewGroup;
+    public ViewGroup getUIParentLayout() {
+        return UIParentLayout;
+    }
+
+    public ViewGroup getUIComponentLayout() {
+        return UIComponentLayout;
+    }
+
+    public void setUIComponentLayout(ViewGroup UIComponentLayout) {
+        this.UIComponentLayout = UIComponentLayout;
     }
 
     public int getUIMarginTop() {
