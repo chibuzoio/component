@@ -254,7 +254,7 @@ public class UIComponentController {
         }
     }
 
-    public void setMarginBase(int marginLeft, int marginTop, int marginRight, int marginBottom) {
+    private void setMarginBase(int marginLeft, int marginTop, int marginRight, int marginBottom) {
         ViewGroup.LayoutParams layoutParams;
 
         if (uiComponent.getUIComponentSize() == UIComponentSize.WIDE_COMPONENT_SIZE) {
