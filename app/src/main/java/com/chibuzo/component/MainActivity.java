@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
 //        uiButton.setUIMargin(111, 0, 0, 0);
         uiButton.resetComponentPosition();
 
+        UIButton second = new UIButton(uiFrameLayout);
+        second.setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
+        second.setUIText("delete");
+
         // Put any code you want to run after complete
         // rendering of the UI inside this construct
         getWindow().getDecorView().post(() -> {

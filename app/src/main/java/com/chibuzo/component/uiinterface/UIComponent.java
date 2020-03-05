@@ -9,7 +9,6 @@ public interface UIComponent {
     int getUILayoutParamsType();
     int getUIParentLayoutType();
     ViewGroup getUIParentLayout();
-    void resetComponentPosition();
     ViewGroup getUIComponentLayout();
     UIComponent setUIMarginTop(int top);
     UIComponent setUIPaddingTop(int top);

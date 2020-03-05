@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.chibuzo.component.control.UIComponentController;
 import com.chibuzo.component.model.constants.UIComponentParams;
 import com.chibuzo.component.model.constants.UIComponentPosition;
 import com.chibuzo.component.model.constants.UIComponentSize;
@@ -19,6 +20,8 @@ import com.chibuzo.component.utility.AU;
 public class UIButton extends AppCompatButton implements UIComponent {
     private Context context;
     private ViewGroup uiComponentLayout, uiParentLayout;
+    private UIComponentController uiComponentController;
+    private com.chibuzo.component.model.UIComponent uiComponent;
     private int uiLayoutType, uiLayoutParamsType, uiParentLayoutType;
     private int marginTop, marginLeft, marginRight, marginBottom, uiParentSize;
     private int paddingTop, paddingLeft, paddingRight, paddingBottom, uiComponentSize;
@@ -41,93 +44,26 @@ public class UIButton extends AppCompatButton implements UIComponent {
         paddingRight = AU.dimen(context, 7);
         paddingBottom = AU.dimen(context, 7);
 
+        uiComponent = new com.chibuzo.component.model.UIComponent();
+        uiComponentController = new UIComponentController(this, uiComponent);
+
         setUIText("Submit");
         setUILayoutType(viewGroup);
-        setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
-        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
+        uiComponent.setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
         setUIPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
+        uiComponentController.setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
     }
 
     @Override
     public UIComponent setUIComponentPosition(int uiComponentPosition) {
-        resetComponentPosition();
-
-        int marginTop, marginLeft;
-        int childWidth = getWidth();
-        int childHeight = getHeight();
-        int parentWidth = ((ViewGroup) getParent()).getWidth();
-        int parentHeight = ((ViewGroup) getParent()).getHeight();
-        int relativeRight = parentWidth - childWidth;
-        int relativeBottom = parentHeight - childHeight;
-
-        switch (uiComponentPosition) {
-            case UIComponentPosition.VERTICAL_LEFT:
-                marginTop = relativeBottom / 2;
-                setMarginBase(0, marginTop, 0, 0);
-                this.marginTop = marginTop;
-                break;
-            case UIComponentPosition.CENTER:
-                marginTop = relativeBottom / 2;
-                marginLeft = relativeRight / 2;
-                setMarginBase(marginLeft, marginTop, 0, 0);
-                this.marginLeft = marginLeft;
-                this.marginTop = marginTop;
-                break;
-            case UIComponentPosition.VERTICAL_RIGHT:
-                marginLeft = relativeRight;
-                marginTop = relativeBottom / 2;
-                setMarginBase(marginLeft, marginTop, 0, 0);
-                this.marginLeft = marginLeft;
-                this.marginTop = marginTop;
-                break;
-            case UIComponentPosition.TOP_CENTER:
-                marginLeft = relativeRight / 2;
-                setMarginBase(marginLeft, 0, 0, 0);
-                this.marginLeft = marginLeft;
-                break;
-            case UIComponentPosition.TOP_RIGHT:
-                marginLeft = relativeRight;
-                setMarginBase(marginLeft, 0, 0, 0);
-                this.marginLeft = marginLeft;
-                break;
-            case UIComponentPosition.BOTTOM_LEFT:
-                marginTop = relativeBottom;
-                setMarginBase(0, marginTop, 0, 0);
-                this.marginTop = marginTop;
-                break;
-            case UIComponentPosition.BOTTOM_CENTER:
-                marginTop = relativeBottom;
-                marginLeft = relativeRight / 2;
-                setMarginBase(marginLeft, marginTop, 0, 0);
-                this.marginLeft = marginLeft;
-                this.marginTop = marginTop;
-                break;
-            case UIComponentPosition.BOTTOM_RIGHT:
-                marginTop = relativeBottom;
-                marginLeft = relativeRight;
-                setMarginBase(marginLeft, marginTop, 0, 0);
-                this.marginLeft = marginLeft;
-                this.marginTop = marginTop;
-                break;
-            case UIComponentPosition.DEFAULT:
-            case UIComponentPosition.TOP_LEFT:
-            default:
-                resetComponentPosition();
-        }
-
+        uiComponentController.setUIComponentPosition(uiComponentPosition);
         return this;
     }
 
     @Override
     public void setUIParentLayoutType(ViewGroup viewGroup) {
-        if (viewGroup instanceof FrameLayout) {
-            this.uiParentLayoutType = UILayoutType.FRAMELAYOUT_LAYOUT_TYPE;
-        } else if (viewGroup instanceof LinearLayout) {
-            this.uiParentLayoutType = UILayoutType.LINEARLAYOUT_LAYOUT_TYPE;
-        } else if (viewGroup instanceof RelativeLayout) {
-            this.uiParentLayoutType = UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE;
-        }
+        uiComponentController.setUIParentLayoutType(viewGroup);
     }
 
     @Override
@@ -166,16 +102,6 @@ public class UIButton extends AppCompatButton implements UIComponent {
     }
 
     @Override
-    public void resetComponentPosition() {
-        marginTop = AU.dimen(getContext(), 0);
-        marginLeft = AU.dimen(getContext(), 0);
-        marginRight = AU.dimen(getContext(), 0);
-        marginBottom = AU.dimen(getContext(), 0);
-        setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
-        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
-    }
-
-    @Override
     public void setUIParentLayout(ViewGroup uiParentLayout) {
         this.uiParentLayout = uiParentLayout;
     }
@@ -199,22 +125,19 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public UIComponent setUIMarginBottom(int bottom) {
-        marginBottom = marginBottom + AU.dimen(context, bottom);
-        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
+        uiComponentController.setUIMarginBottom(bottom);
         return this;
     }
 
     @Override
     public UIComponent setUIMarginRight(int right) {
-        marginRight = marginRight + AU.dimen(context, right);
-        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
+        uiComponentController.setUIMarginRight(right);
         return this;
     }
 
     @Override
     public UIComponent setUIMarginLeft(int left) {
-        marginLeft = marginLeft + AU.dimen(context, left);
-        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
+        uiComponentController.setUIMarginLeft(left);
         return this;
     }
 
@@ -225,123 +148,30 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public UIComponent setUIMarginTop(int top) {
-        marginTop = marginTop + AU.dimen(context, top);
-        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
+        uiComponentController.setUIMarginTop(top);
         return this;
     }
 
     @Override
     public UIComponent setUIMargin(int left, int top, int right, int bottom) {
-        marginTop = marginTop + AU.dimen(context, top);
-        marginLeft = marginLeft + AU.dimen(context, left);
-        marginRight = marginRight + AU.dimen(context, right);
-        marginBottom = marginBottom + AU.dimen(context, bottom);
-
-        setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
-
+        uiComponentController.setUIMargin(left, top, right, bottom);
         return this;
-    }
-
-    private void setMarginBase(int marginLeft, int marginTop, int marginRight, int marginBottom) {
-        ViewGroup.LayoutParams uiButtonLayoutParams;
-
-        if (getUIComponentSize() == UIComponentSize.WIDE_COMPONENT_SIZE) {
-            if (getUIParentLayout() instanceof LinearLayout) {
-                uiButtonLayoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                ((LinearLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
-            } else if (getUIParentLayout() instanceof RelativeLayout) {
-                uiButtonLayoutParams = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-                ((RelativeLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
-            } else {
-                uiButtonLayoutParams = new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-
-                ((FrameLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
-            }
-        } else {
-            if (getUIParentLayout() instanceof LinearLayout) {
-                uiButtonLayoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                ((LinearLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
-            } else if (getUIParentLayout() instanceof RelativeLayout) {
-                uiButtonLayoutParams = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-                ((RelativeLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
-            } else {
-                uiButtonLayoutParams = new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-
-                ((FrameLayout.LayoutParams) uiButtonLayoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
-            }
-        }
-
-        setLayoutParams(uiButtonLayoutParams);
     }
 
     @Override
     public UIComponent setUIPaddingBottom(int bottom) {
-        paddingBottom = AU.dimen(context, bottom);
-        super.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        uiComponentController.setUIMarginBottom(bottom);
         return this;
     }
 
     @Override
     public void setUIComponentSize(int uiComponentSize) {
-        switch (getUILayoutType()) {
-            case UILayoutType.LINEARLAYOUT_LAYOUT_TYPE:
-                if (uiComponentSize == UIComponentSize.NARROW_COMPONENT_SIZE) {
-                    LinearLayout.LayoutParams uiComponentSizeParams = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    setLayoutParams(uiComponentSizeParams);
-                } else if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
-                    LinearLayout.LayoutParams uiComponentSizeParams = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    setLayoutParams(uiComponentSizeParams);
-                }
-                break;
-            case UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE:
-                if (uiComponentSize == UIComponentSize.NARROW_COMPONENT_SIZE) {
-                    RelativeLayout.LayoutParams uiComponentSizeParams = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    setLayoutParams(uiComponentSizeParams);
-                } else if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
-                    RelativeLayout.LayoutParams uiComponentSizeParams = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    setLayoutParams(uiComponentSizeParams);
-                }
-                break;
-            case UILayoutType.FRAMELAYOUT_LAYOUT_TYPE:
-            default:
-                if (uiComponentSize == UIComponentSize.NARROW_COMPONENT_SIZE) {
-                    FrameLayout.LayoutParams uiComponentSizeParams = new FrameLayout.LayoutParams(
-                            FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-                    setLayoutParams(uiComponentSizeParams);
-                } else if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
-                    FrameLayout.LayoutParams uiComponentSizeParams = new FrameLayout.LayoutParams(
-                            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-                    setLayoutParams(uiComponentSizeParams);
-                }
-        }
-
-        this.uiComponentSize = uiComponentSize;
+        uiComponentController.setUIComponentSize(uiComponentSize);
     }
 
     @Override
     public UIComponent setUIPaddingRight(int right) {
-        paddingRight = AU.dimen(context, right);
-        super.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        uiComponentController.setUIPaddingRight(right);
         return this;
     }
 

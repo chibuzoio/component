@@ -3,6 +3,8 @@ package com.chibuzo.component.uilayout;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 
@@ -12,8 +14,8 @@ import com.chibuzo.component.model.constants.UILayoutType;
 import com.chibuzo.component.uiinterface.UIComponent;
 
 public class UIFrameLayout extends FrameLayout implements UIComponent {
-    private int layoutParamsType;
-    private int layoutType, uiParentSize;
+    private int uiLayoutType, uiParentSize;
+    private int uiLayoutParamsType, uiParentLayoutType;
 
     public UIFrameLayout(@NonNull Context context) {
         super(context);
@@ -21,7 +23,7 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
         FrameLayout.LayoutParams frameLayoutParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 
-        setLayoutParamsType(UIComponentParams.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
+        setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
         setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
         setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
 
@@ -37,23 +39,19 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
         setLayoutParams(frameLayoutParams);
     }
 
-    public void setLayoutParamsType(int layoutParamsType) {
-        this.layoutParamsType = layoutParamsType;
-    }
-
     @Override
     public void setUIParentLayout(ViewGroup uiParentLayout) {
 
     }
 
     @Override
-    public void setUILayoutParamsType(int layoutParamsType) {
-
+    public void setUILayoutParamsType(int uiLayoutParamsType) {
+        this.uiLayoutParamsType = uiLayoutParamsType;
     }
 
     @Override
     public void setUIParentLayoutType(int uiParentLayoutType) {
-
+        this.uiParentLayoutType = uiParentLayoutType;
     }
 
     @Override
@@ -67,8 +65,14 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
     }
 
     @Override
-    public void setUIParentLayoutType(ViewGroup uiParentLayoutType) {
-
+    public void setUIParentLayoutType(ViewGroup viewGroup) {
+        if (viewGroup instanceof FrameLayout) {
+            this.uiParentLayoutType = UILayoutType.FRAMELAYOUT_LAYOUT_TYPE;
+        } else if (viewGroup instanceof LinearLayout) {
+            this.uiParentLayoutType = UILayoutType.LINEARLAYOUT_LAYOUT_TYPE;
+        } else if (viewGroup instanceof RelativeLayout) {
+            this.uiParentLayoutType = UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE;
+        }
     }
 
     @Override
@@ -81,13 +85,9 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
         return null;
     }
 
-    public int getLayoutParamsType() {
-        return layoutParamsType;
-    }
-
     @Override
     public int getUILayoutType() {
-        return 0;
+        return uiLayoutType;
     }
 
     @Override
@@ -157,7 +157,7 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
 
     @Override
     public void setUILayoutType(int uiLayoutType) {
-
+        this.uiLayoutType = uiLayoutType;
     }
 
     @Override
