@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import com.chibuzo.component.model.constants.UIComponentPosition;
 import com.chibuzo.component.model.constants.UIComponentSize;
 import com.chibuzo.component.model.constants.UILayoutType;
-import com.chibuzo.component.uiinterface.UIComponent;
+import com.chibuzo.component.uilayout.UIFrameLayout;
 import com.chibuzo.component.utility.AU;
 
 public class UIComponentController {
@@ -24,6 +24,48 @@ public class UIComponentController {
         viewGroup = uiComponent.getViewGroup();
         view = uiComponent.getView();
         context = view.getContext();
+    }
+
+    public void setUIPadding(int left, int top, int right, int bottom) {
+        uiComponent.setUIPaddingTop(AU.dimen(context, top));
+        uiComponent.setUIPaddingLeft(AU.dimen(context, left));
+        uiComponent.setUIPaddingRight(AU.dimen(context, right));
+        uiComponent.setUIPaddingBottom(AU.dimen(context, bottom));
+        view.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
+                uiComponent.getUIPaddingRight(), uiComponent.getUIPaddingBottom());
+    }
+
+    public void setUIParentSize(ViewGroup viewGroup) {
+        if (viewGroup instanceof FrameLayout) {
+            uiComponent.setUIParentSize(((UIFrameLayout) viewGroup).getUIComponentSize());
+        } else if (viewGroup instanceof LinearLayout) {
+
+        } else if (viewGroup instanceof RelativeLayout) {
+
+        }
+    }
+
+    public void setUILayoutType(ViewGroup viewGroup) {
+        ViewGroup.LayoutParams layoutParams;
+
+        if (viewGroup instanceof  LinearLayout) {
+            layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            uiComponent.setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
+        } else if (viewGroup instanceof RelativeLayout) {
+            layoutParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+            uiComponent.setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
+        } else {
+            layoutParams = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+
+            uiComponent.setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
+        }
+
+        view.setLayoutParams(layoutParams);
     }
 
     public void setUIPaddingLeft(int left) {

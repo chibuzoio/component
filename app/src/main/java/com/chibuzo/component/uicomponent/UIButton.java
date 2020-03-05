@@ -22,9 +22,7 @@ public class UIButton extends AppCompatButton implements UIComponent {
     private ViewGroup uiComponentLayout, uiParentLayout;
     private UIComponentController uiComponentController;
     private com.chibuzo.component.model.UIComponent uiComponent;
-    private int uiLayoutType, uiLayoutParamsType, uiParentLayoutType;
-    private int marginTop, marginLeft, marginRight, marginBottom, uiParentSize;
-    private int paddingTop, paddingLeft, paddingRight, paddingBottom, uiComponentSize;
+    private int uiLayoutType, uiLayoutParamsType, uiParentLayoutType, uiParentSize;
 
     public UIButton(ViewGroup viewGroup) {
         super(viewGroup.getContext());
@@ -35,24 +33,15 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
         setParentLayoutProperties(viewGroup);
 
-        marginTop = AU.dimen(context, 0);
-        marginLeft = AU.dimen(context, 0);
-        marginRight = AU.dimen(context, 0);
-        marginBottom = AU.dimen(context, 0);
-        paddingTop = AU.dimen(context, 7);
-        paddingLeft = AU.dimen(context, 7);
-        paddingRight = AU.dimen(context, 7);
-        paddingBottom = AU.dimen(context, 7);
-
         uiComponent = new com.chibuzo.component.model.UIComponent(viewGroup, this);
         uiComponentController = new UIComponentController(uiComponent);
 
         setUIText("Submit");
         setUILayoutType(viewGroup);
+        setUIPadding(7, 7, 7, 7);
         setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
-        setUIPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
-        uiComponentController.setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
+        uiComponentController.setMarginBase(0, 0, 0, 0);
     }
 
     @Override
@@ -160,7 +149,7 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public UIComponent setUIPaddingBottom(int bottom) {
-        uiComponentController.setUIMarginBottom(bottom);
+        uiComponentController.setUIPaddingBottom(bottom);
         return this;
     }
 
@@ -177,43 +166,17 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public void setUILayoutType(ViewGroup viewGroup) {
-        ViewGroup.LayoutParams uiButtonLayoutParams;
-
-        if (getUIParentLayout() instanceof  LinearLayout) {
-            uiButtonLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-            setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
-        } else if (getUIParentLayout() instanceof RelativeLayout) {
-            uiButtonLayoutParams = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-            setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
-        } else {
-            uiButtonLayoutParams = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-
-            setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
-        }
-
-        setLayoutParams(uiButtonLayoutParams);
+        uiComponentController.setUILayoutType(viewGroup);
     }
 
     @Override
     public void setUIParentSize(ViewGroup viewGroup) {
-        if (viewGroup instanceof FrameLayout) {
-            setUIParentSize(((UIFrameLayout) viewGroup).getUIComponentSize());
-        } else if (viewGroup instanceof LinearLayout) {
-
-        } else if (viewGroup instanceof RelativeLayout) {
-
-        }
+        uiComponentController.setUIParentSize(viewGroup);
     }
 
     @Override
     public UIComponent setUIPaddingLeft(int left) {
-        paddingLeft = AU.dimen(context, left);
-        super.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        uiComponentController.setUIPaddingLeft(left);
         return this;
     }
 
@@ -229,8 +192,7 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public UIComponent setUIPaddingTop(int top) {
-        paddingTop = AU.dimen(context, top);
-        super.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        uiComponentController.setUIPaddingTop(top);
         return this;
     }
 
@@ -241,11 +203,7 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
     @Override
     public UIComponent setUIPadding(int left, int top, int right, int bottom) {
-        paddingTop = AU.dimen(context, top);
-        paddingLeft = AU.dimen(context, left);
-        paddingRight = AU.dimen(context, right);
-        paddingBottom = AU.dimen(context, bottom);
-        super.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        uiComponentController.setUIPadding(left, top, right, bottom);
         return this;
     }
 }

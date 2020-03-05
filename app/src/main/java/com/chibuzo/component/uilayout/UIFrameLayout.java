@@ -119,7 +119,7 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
     public ViewGroup getUIParentLayout() {
         return null;
     }
-                  
+
     @Override
     public UIComponent setUIMarginTop(int top) {
         return null;
