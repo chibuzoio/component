@@ -8,17 +8,18 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 
+import com.chibuzo.component.control.UIComponentController;
 import com.chibuzo.component.model.constants.UIComponentParams;
 import com.chibuzo.component.model.constants.UIComponentSize;
 import com.chibuzo.component.model.constants.UILayoutType;
 import com.chibuzo.component.uiinterface.UIComponent;
 
 public class UIFrameLayout extends FrameLayout implements UIComponent {
-    private int uiLayoutType, uiParentSize;
-    private int uiLayoutParamsType, uiParentLayoutType;
+    private UIComponentController uiComponentController;
+    private com.chibuzo.component.model.UIComponent uiComponent;
 
-    public UIFrameLayout(@NonNull Context context) {
-        super(context);
+    public UIFrameLayout(ViewGroup viewGroup) {
+        super(viewGroup.getContext());
 
         FrameLayout.LayoutParams frameLayoutParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
@@ -26,32 +27,30 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
         setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
         setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
         setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
-
-/*
-In the child component class, first get the type of viewGroup using instanceof so that
-you will have to use instanceof only once
-
-void setUIParentSize(int uiParentSize); //set this here and get it in the child component
-void setUIParentLayout(ViewGroup uiParentLayout); //set here and get it in child component
-void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as to get it in the child component
-* */
-
         setLayoutParams(frameLayoutParams);
+
+        viewGroup.addView(this);
+
+        uiComponent = new com.chibuzo.component.model.UIComponent(viewGroup, this);
+        uiComponentController = new UIComponentController(uiComponent);
+
+        setParentLayoutProperties(viewGroup);
     }
 
     @Override
     public void setUILayoutParamsType(int uiLayoutParamsType) {
-        this.uiLayoutParamsType = uiLayoutParamsType;
+        uiComponent.setUILayoutParamsType(uiLayoutParamsType);
     }
 
     @Override
     public void setUIParentLayoutType(int uiParentLayoutType) {
-        this.uiParentLayoutType = uiParentLayoutType;
+        uiComponent.setUIParentLayoutType(uiParentLayoutType);
     }
 
     @Override
     public void setParentLayoutProperties(ViewGroup viewGroup) {
-
+        setUIParentLayoutType(viewGroup);
+        setUIParentSize(viewGroup);
     }
 
     @Override
@@ -61,13 +60,7 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
 
     @Override
     public void setUIParentLayoutType(ViewGroup viewGroup) {
-        if (viewGroup instanceof FrameLayout) {
-            this.uiParentLayoutType = UILayoutType.FRAMELAYOUT_LAYOUT_TYPE;
-        } else if (viewGroup instanceof LinearLayout) {
-            this.uiParentLayoutType = UILayoutType.LINEARLAYOUT_LAYOUT_TYPE;
-        } else if (viewGroup instanceof RelativeLayout) {
-            this.uiParentLayoutType = UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE;
-        }
+        uiComponentController.setUIParentLayoutType(viewGroup);
     }
 
     @Override
@@ -82,37 +75,37 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
 
     @Override
     public int getUILayoutType() {
-        return uiLayoutType;
+        return uiComponent.getUILayoutType();
     }
 
     @Override
     public int getUIParentSize() {
-        return uiParentSize;
+        return uiComponent.getUIParentSize();
     }
 
     @Override
     public ViewGroup getUIComponentLayout() {
-        return null;
+        return uiComponent.getUIComponentLayout();
     }
 
     @Override
     public int getUIComponentSize() {
-        return 0;
+        return uiComponent.getUIComponentSize();
     }
 
     @Override
     public int getUILayoutParamsType() {
-        return 0;
+        return uiComponent.getUILayoutParamsType();
     }
 
     @Override
     public int getUIParentLayoutType() {
-        return 0;
+        return uiComponent.getUIParentLayoutType();
     }
 
     @Override
     public ViewGroup getUIParentLayout() {
-        return null;
+        return uiComponent.getUIParentLayout();
     }
 
     @Override
@@ -132,7 +125,7 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
 
     @Override
     public void setUIParentSize(int uiParentSize) {
-        this.uiParentSize = uiParentSize;
+        uiComponent.setUIParentSize(uiParentSize);
     }
 
     @Override
@@ -147,7 +140,7 @@ void setUIParentLayoutType(int uiParentLayoutType); //set this here also so as t
 
     @Override
     public void setUILayoutType(int uiLayoutType) {
-        this.uiLayoutType = uiLayoutType;
+        uiComponent.setUILayoutType(uiLayoutType);
     }
 
     @Override

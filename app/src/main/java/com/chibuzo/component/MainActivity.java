@@ -1,15 +1,16 @@
 package com.chibuzo.component;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.chibuzo.component.model.constants.UIComponentPosition;
 import com.chibuzo.component.model.constants.UIComponentSize;
 import com.chibuzo.component.uicomponent.UIButton;
 import com.chibuzo.component.uilayout.UIFrameLayout;
+import com.chibuzo.component.uilayout.UIViewGroup;
 import com.chibuzo.component.utility.Utility;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
         deviceDisplayWidth = displayMetrics.widthPixels;
         deviceDisplayHeight = displayMetrics.heightPixels;
 
-        UIFrameLayout uiFrameLayout = new UIFrameLayout(this);
-        setContentView(uiFrameLayout);
+        UIViewGroup uiViewGroup = new UIViewGroup(this);
+        setContentView(uiViewGroup);
+
+        UIFrameLayout uiFrameLayout = new UIFrameLayout(uiViewGroup);
 
         UIButton uiButton = new UIButton(uiFrameLayout);
 //        uiButton.setUIMargin(23, 23, 23, 23);

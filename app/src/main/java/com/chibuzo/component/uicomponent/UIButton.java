@@ -33,7 +33,7 @@ public class UIButton extends AppCompatButton implements UIComponent {
 
         setUIText("Submit");
         setUILayoutType(viewGroup);
-        setUIPadding(7, 7, 7, 7);
+        setUIPadding(0, 0, 0, 0);
         setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
         setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
         uiComponentController.setMarginBase(0, 0, 0, 0);
