@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         uiButton.setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
 
 //        uiButton.setUIMargin(111, 0, 0, 0);
-        uiButton.resetComponentPosition();
 
         UIButton second = new UIButton(uiFrameLayout);
         second.setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);

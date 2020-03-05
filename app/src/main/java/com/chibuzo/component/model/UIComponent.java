@@ -1,6 +1,10 @@
 package com.chibuzo.component.model;
 
+import android.view.View;
+import android.view.ViewGroup;
+
 public class UIComponent {
+    private View view;
     private int UIMarginTop;
     private int UILayoutType;
     private int UIMarginLeft;
@@ -12,8 +16,22 @@ public class UIComponent {
     private int UIMarginBottom;
     private int UIPaddingBottom;
     private int UIComponentSize;
+    private ViewGroup viewGroup;
     private int UILayoutParamsType;
     private int UIParentLayoutType;
+
+    public UIComponent(ViewGroup viewGroup, View view) {
+        this.viewGroup = viewGroup;
+        this.view = view;
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    public ViewGroup getViewGroup() {
+        return viewGroup;
+    }
 
     public int getUIMarginTop() {
         return UIMarginTop;

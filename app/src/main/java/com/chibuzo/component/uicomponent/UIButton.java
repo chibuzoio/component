@@ -44,12 +44,12 @@ public class UIButton extends AppCompatButton implements UIComponent {
         paddingRight = AU.dimen(context, 7);
         paddingBottom = AU.dimen(context, 7);
 
-        uiComponent = new com.chibuzo.component.model.UIComponent();
-        uiComponentController = new UIComponentController(this, uiComponent);
+        uiComponent = new com.chibuzo.component.model.UIComponent(viewGroup, this);
+        uiComponentController = new UIComponentController(uiComponent);
 
         setUIText("Submit");
         setUILayoutType(viewGroup);
-        uiComponent.setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
+        setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
         setUIPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
         uiComponentController.setMarginBase(marginLeft, marginTop, marginRight, marginBottom);
