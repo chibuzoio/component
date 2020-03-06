@@ -1,21 +1,16 @@
 package com.chibuzo.component.uilayout;
 
-import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
-
-import com.chibuzo.component.control.UIComponentController;
+import com.chibuzo.component.control.UIDimensionController;
 import com.chibuzo.component.model.constants.UIComponentParams;
 import com.chibuzo.component.model.constants.UIComponentSize;
 import com.chibuzo.component.model.constants.UILayoutType;
 import com.chibuzo.component.uiinterface.UIComponent;
 
 public class UIFrameLayout extends FrameLayout implements UIComponent {
-    private UIComponentController uiComponentController;
+    private UIDimensionController uiDimensionController;
     private com.chibuzo.component.model.UIComponent uiComponent;
 
     public UIFrameLayout(ViewGroup viewGroup) {
@@ -32,7 +27,7 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
         viewGroup.addView(this);
 
         uiComponent = new com.chibuzo.component.model.UIComponent(viewGroup, this);
-        uiComponentController = new UIComponentController(uiComponent);
+        uiDimensionController = new UIDimensionController(uiComponent);
 
         setParentLayoutProperties(viewGroup);
     }
@@ -40,11 +35,6 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     @Override
     public void setUILayoutParamsType(int uiLayoutParamsType) {
         uiComponent.setUILayoutParamsType(uiLayoutParamsType);
-    }
-
-    @Override
-    public void setUIParentLayoutType(int uiParentLayoutType) {
-        uiComponent.setUIParentLayoutType(uiParentLayoutType);
     }
 
     @Override
@@ -60,7 +50,7 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
 
     @Override
     public void setUIParentLayoutType(ViewGroup viewGroup) {
-        uiComponentController.setUIParentLayoutType(viewGroup);
+        uiDimensionController.setUIParentLayoutType(viewGroup);
     }
 
     @Override
@@ -121,11 +111,6 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     @Override
     public UIComponent setUIMarginLeft(int left) {
         return null;
-    }
-
-    @Override
-    public void setUIParentSize(int uiParentSize) {
-        uiComponent.setUIParentSize(uiParentSize);
     }
 
     @Override

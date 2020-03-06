@@ -13,7 +13,6 @@ public interface UIComponent {
     UIComponent setUIMarginTop(int top);
     UIComponent setUIPaddingTop(int top);
     UIComponent setUIMarginLeft(int left);
-    void setUIParentSize(int uiParentSize);
     void setUILayoutType(int uiLayoutType);
     UIComponent setUIPaddingLeft(int left);
     UIComponent setUIMarginRight(int right);
@@ -24,7 +23,6 @@ public interface UIComponent {
     UIComponent setUIPaddingBottom(int bottom);
     void setUIComponentSize(int uiComponentSize);
     void setUILayoutParamsType(int uiLayoutParamsType);
-    void setUIParentLayoutType(int uiParentLayoutType);
     void setParentLayoutProperties(ViewGroup viewGroup);
     void setUIComponentLayout(ViewGroup uiComponentLayout);
     void setUIParentLayoutType(ViewGroup uiParentLayoutType);
