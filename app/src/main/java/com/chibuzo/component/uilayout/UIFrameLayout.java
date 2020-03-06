@@ -5,8 +5,6 @@ import android.widget.FrameLayout;
 
 import com.chibuzo.component.control.UIDimensionController;
 import com.chibuzo.component.model.constants.UIComponentParams;
-import com.chibuzo.component.model.constants.UIComponentSize;
-import com.chibuzo.component.model.constants.UILayoutType;
 import com.chibuzo.component.uiinterface.UIComponent;
 
 public class UIFrameLayout extends FrameLayout implements UIComponent {
@@ -19,17 +17,14 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
         FrameLayout.LayoutParams frameLayoutParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 
-        setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
-        setUIComponentSize(UIComponentSize.WIDE_COMPONENT_SIZE);
-        setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
         setLayoutParams(frameLayoutParams);
 
         viewGroup.addView(this);
 
-        uiComponent = new com.chibuzo.component.model.UIComponent(viewGroup, this);
+        uiComponent = new com.chibuzo.component.model.UIComponent(this);
         uiDimensionController = new UIDimensionController(uiComponent);
 
-        setParentLayoutProperties(viewGroup);
+        uiComponent.setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
     }
 
     @Override
@@ -38,19 +33,8 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     }
 
     @Override
-    public void setParentLayoutProperties(ViewGroup viewGroup) {
-        setUIParentLayoutType(viewGroup);
-        setUIParentSize(viewGroup);
-    }
-
-    @Override
     public UIComponent setUIComponentPosition(int buttonPosition) {
         return null;
-    }
-
-    @Override
-    public void setUIParentLayoutType(ViewGroup viewGroup) {
-        uiDimensionController.setUIParentLayoutType(viewGroup);
     }
 
     @Override
@@ -64,38 +48,8 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     }
 
     @Override
-    public int getUILayoutType() {
-        return uiComponent.getUILayoutType();
-    }
-
-    @Override
-    public int getUIParentSize() {
-        return uiComponent.getUIParentSize();
-    }
-
-    @Override
-    public ViewGroup getUIComponentLayout() {
-        return uiComponent.getUIComponentLayout();
-    }
-
-    @Override
-    public int getUIComponentSize() {
-        return uiComponent.getUIComponentSize();
-    }
-
-    @Override
     public int getUILayoutParamsType() {
         return uiComponent.getUILayoutParamsType();
-    }
-
-    @Override
-    public int getUIParentLayoutType() {
-        return uiComponent.getUIParentLayoutType();
-    }
-
-    @Override
-    public ViewGroup getUIParentLayout() {
-        return uiComponent.getUIParentLayout();
     }
 
     @Override
@@ -119,16 +73,6 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     }
 
     @Override
-    public void setUIComponentLayout(ViewGroup uiLayout) {
-
-    }
-
-    @Override
-    public void setUILayoutType(int uiLayoutType) {
-        uiComponent.setUILayoutType(uiLayoutType);
-    }
-
-    @Override
     public UIComponent setUIMarginRight(int right) {
         return null;
     }
@@ -139,16 +83,6 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     }
 
     @Override
-    public void setUILayoutType(ViewGroup viewGroup) {
-
-    }
-
-    @Override
-    public void setUIParentSize(ViewGroup viewGroup) {
-
-    }
-
-    @Override
     public UIComponent setUIMarginBottom(int bottom) {
         return null;
     }
@@ -156,11 +90,6 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     @Override
     public UIComponent setUIPaddingBottom(int bottom) {
         return null;
-    }
-
-    @Override
-    public void setUIComponentSize(int uiComponentSize) {
-
     }
 }
 

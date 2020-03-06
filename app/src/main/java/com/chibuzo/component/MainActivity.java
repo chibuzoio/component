@@ -6,11 +6,12 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.chibuzo.component.model.constants.UIComponentParams;
 import com.chibuzo.component.model.constants.UIComponentPosition;
-import com.chibuzo.component.model.constants.UIComponentSize;
 import com.chibuzo.component.uicomponent.UIButton;
+import com.chibuzo.component.uilayout.BaseFrameLayout;
 import com.chibuzo.component.uilayout.UIFrameLayout;
-import com.chibuzo.component.uilayout.UIViewGroup;
+import com.chibuzo.component.uilayout.BaseLinearLayout;
 import com.chibuzo.component.utility.Utility;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,24 +28,22 @@ public class MainActivity extends AppCompatActivity {
         deviceDisplayWidth = displayMetrics.widthPixels;
         deviceDisplayHeight = displayMetrics.heightPixels;
 
-        UIViewGroup uiViewGroup = new UIViewGroup(this);
-        setContentView(uiViewGroup);
-
-        UIFrameLayout uiFrameLayout = new UIFrameLayout(uiViewGroup);
-
-        UIButton uiButton = new UIButton(uiFrameLayout);
-//        uiButton.setUIMargin(23, 23, 23, 23);
-        uiButton.setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
-
-//        uiButton.setUIMargin(111, 0, 0, 0);
-
-        UIButton second = new UIButton(uiFrameLayout);
-        second.setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
-        second.setUIText("delete");
-
         // Put any code you want to run after complete
         // rendering of the UI inside this construct
         getWindow().getDecorView().post(() -> {
+            BaseFrameLayout baseFrameLayout = new BaseFrameLayout(this);
+            setContentView(baseFrameLayout);
+
+            UIFrameLayout uiFrameLayout = new UIFrameLayout(baseFrameLayout);
+
+            UIButton uiButton = new UIButton(uiFrameLayout);
+//        uiButton.setUIMargin(23, 23, 23, 23);
+
+//        uiButton.setUIMargin(111, 0, 0, 0);
+
+            UIButton second = new UIButton(uiFrameLayout);
+            second.setUIText("delete");
+
             screenWidth = deviceDisplayWidth;
 
             buttonWidth = uiButton.getWidth();
@@ -58,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             Log.e("screenWidth", "screenWidth value here is " + screenWidth);
             Log.e("horizontalTotal", "horizontalTotal value here is " + horizontalTotal);
 
+            uiButton.setUILayoutParamsType(UIComponentParams.WRAP_WIDTH_WRAP_HEIGHT_PARAMS);
+            second.setUILayoutParamsType(UIComponentParams.WRAP_WIDTH_WRAP_HEIGHT_PARAMS);
             uiButton.setUIComponentPosition(UIComponentPosition.VERTICAL_RIGHT);
 
             // set and get previous margin for addition and multiplication

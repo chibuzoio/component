@@ -9,26 +9,21 @@ import android.widget.RelativeLayout;
 
 import com.chibuzo.component.model.constants.UIComponentParams;
 import com.chibuzo.component.model.constants.UIComponentPosition;
-import com.chibuzo.component.model.constants.UIComponentSize;
-import com.chibuzo.component.model.constants.UILayoutType;
-import com.chibuzo.component.uilayout.UIFrameLayout;
 import com.chibuzo.component.utility.AU;
 
 public class UIDimensionController {
     private Context context;
     private View uiComponentView;
-    private ViewGroup uiParentLayout;
     private com.chibuzo.component.model.UIComponent uiComponent;
 
     public UIDimensionController(com.chibuzo.component.model.UIComponent uiComponent) {
         this.uiComponent = uiComponent;
-        uiParentLayout = uiComponent.getUIParentLayout();
         uiComponentView = uiComponent.getUIComponent();
         context = uiComponentView.getContext();
     }
 
     public void setUILayoutParamsType(int uiLayoutParamsType) {
-        if (uiParentLayout instanceof LinearLayout) {
+        if (uiComponentView.getParent() instanceof LinearLayout) {
             LinearLayout.LayoutParams layoutParams;
 
             switch (uiLayoutParamsType) {
@@ -51,7 +46,7 @@ public class UIDimensionController {
             }
 
             uiComponentView.setLayoutParams(layoutParams);
-        } else if (uiParentLayout instanceof RelativeLayout) {
+        } else if (uiComponentView.getParent() instanceof RelativeLayout) {
             RelativeLayout.LayoutParams layoutParams;
 
             switch (uiLayoutParamsType) {
@@ -111,39 +106,6 @@ public class UIDimensionController {
                 uiComponent.getUIPaddingRight(), uiComponent.getUIPaddingBottom());
     }
 
-    public void setUIParentSize(ViewGroup viewGroup) {
-        if (viewGroup instanceof FrameLayout) {
-            uiComponent.setUIParentSize(((UIFrameLayout) viewGroup).getUIComponentSize());
-        } else if (viewGroup instanceof LinearLayout) {
-
-        } else if (viewGroup instanceof RelativeLayout) {
-
-        }
-    }
-
-    public void setUILayoutType(ViewGroup viewGroup) {
-        ViewGroup.LayoutParams layoutParams;
-
-        if (viewGroup instanceof  LinearLayout) {
-            layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-            uiComponent.setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
-        } else if (viewGroup instanceof RelativeLayout) {
-            layoutParams = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-            uiComponent.setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
-        } else {
-            layoutParams = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-
-            uiComponent.setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
-        }
-
-        uiComponentView.setLayoutParams(layoutParams);
-    }
-
     public void setUIPaddingLeft(int left) {
         uiComponent.setUIPaddingLeft(AU.dimen(context, left));
         uiComponentView.setPadding(uiComponent.getUIPaddingLeft(), uiComponent.getUIPaddingTop(),
@@ -197,7 +159,6 @@ public class UIDimensionController {
         uiComponent.setUIMarginLeft(AU.dimen(context, 0));
         uiComponent.setUIMarginRight(AU.dimen(context, 0));
         uiComponent.setUIMarginBottom(AU.dimen(context, 0));
-        setUIComponentSize(UIComponentSize.NARROW_COMPONENT_SIZE);
         setMarginBase(uiComponent.getUIMarginLeft(), uiComponent.getUIMarginTop(),
                 uiComponent.getUIMarginRight(), uiComponent.getUIMarginBottom());
     }
@@ -209,58 +170,6 @@ public class UIDimensionController {
         uiComponent.setUIMarginBottom(uiComponent.getUIMarginBottom() + AU.dimen(context, bottom));
         setMarginBase(uiComponent.getUIMarginLeft(), uiComponent.getUIMarginTop(),
                 uiComponent.getUIMarginRight(), uiComponent.getUIMarginBottom());
-    }
-
-    public void setUIComponentSize(int uiComponentSize) {
-        if (uiParentLayout instanceof LinearLayout) {
-            LinearLayout.LayoutParams layoutParams;
-
-            if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
-                layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT);
-            } else {
-                layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-            }
-
-            uiComponentView.setLayoutParams(layoutParams);
-        } else if (uiParentLayout instanceof RelativeLayout) {
-            RelativeLayout.LayoutParams layoutParams;
-
-            if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
-                layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-            } else {
-                layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-            }
-
-            uiComponentView.setLayoutParams(layoutParams);
-        } else {
-            FrameLayout.LayoutParams layoutParams;
-
-            if (uiComponentSize == UIComponentSize.WIDE_COMPONENT_SIZE) {
-                layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.WRAP_CONTENT);
-            } else {
-                layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
-                        FrameLayout.LayoutParams.WRAP_CONTENT);
-            }
-
-            uiComponentView.setLayoutParams(layoutParams);
-        }
-
-        uiComponent.setUIComponentSize(uiComponentSize);
-    }
-
-    public void setUIParentLayoutType(ViewGroup viewGroup) {
-        if (viewGroup instanceof FrameLayout) {
-            uiComponent.setUIParentLayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
-        } else if (viewGroup instanceof LinearLayout) {
-            uiComponent.setUIParentLayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
-        } else if (viewGroup instanceof RelativeLayout) {
-            uiComponent.setUIParentLayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
-        }
     }
 
     public void setUIComponentPosition(int uiComponentPosition) {
@@ -333,46 +242,82 @@ public class UIDimensionController {
     private void setMarginBase(int marginLeft, int marginTop, int marginRight, int marginBottom) {
         ViewGroup.LayoutParams layoutParams;
 
-        if (uiComponent.getUIComponentSize() == UIComponentSize.WIDE_COMPONENT_SIZE) {
-            if (uiParentLayout instanceof LinearLayout) {
-                layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        switch (uiComponent.getUILayoutParamsType()) {
+            case UIComponentParams.MATCH_WIDTH_MATCH_HEIGHT_PARAMS:
+                if (uiComponentView.getParent() instanceof LinearLayout) {
+                    layoutParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-                ((LinearLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                uiComponent.setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
-            } else if (uiParentLayout instanceof RelativeLayout) {
-                layoutParams = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    ((LinearLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                } else if (uiComponentView.getParent() instanceof RelativeLayout) {
+                    layoutParams = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 
-                ((RelativeLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                uiComponent.setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
-            } else {
-                layoutParams = new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                    ((RelativeLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                } else {
+                    layoutParams = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 
-                ((FrameLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                uiComponent.setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
-            }
-        } else {
-            if (uiParentLayout instanceof LinearLayout) {
-                layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    ((FrameLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                }
 
-                ((LinearLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                uiComponent.setUILayoutType(UILayoutType.LINEARLAYOUT_LAYOUT_TYPE);
-            } else if (uiParentLayout instanceof RelativeLayout) {
-                layoutParams = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                break;
+            case UIComponentParams.MATCH_WIDTH_WRAP_HEIGHT_PARAMS:
+                if (uiComponentView.getParent() instanceof LinearLayout) {
+                    layoutParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                ((RelativeLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                uiComponent.setUILayoutType(UILayoutType.RELATIVELAYOUT_LAYOUT_TYPE);
-            } else {
-                layoutParams = new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                    ((LinearLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                } else if (uiComponentView.getParent() instanceof RelativeLayout) {
+                    layoutParams = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-                ((FrameLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
-                uiComponent.setUILayoutType(UILayoutType.FRAMELAYOUT_LAYOUT_TYPE);
-            }
+                    ((RelativeLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                } else {
+                    layoutParams = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+
+                    ((FrameLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                }
+
+                break;
+            case UIComponentParams.WRAP_WIDTH_MATCH_HEIGHT_PARAMS:
+                if (uiComponentView.getParent() instanceof LinearLayout) {
+                    layoutParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+                    ((LinearLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                } else if (uiComponentView.getParent() instanceof RelativeLayout) {
+                    layoutParams = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+
+                    ((RelativeLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                } else {
+                    layoutParams = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT);
+
+                    ((FrameLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                }
+
+                break;
+            case UIComponentParams.WRAP_WIDTH_WRAP_HEIGHT_PARAMS:
+            default:
+                    if (uiComponentView.getParent() instanceof LinearLayout) {
+                        layoutParams = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                        ((LinearLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                    } else if (uiComponentView.getParent() instanceof RelativeLayout) {
+                        layoutParams = new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                        ((RelativeLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                    } else {
+                        layoutParams = new FrameLayout.LayoutParams(
+                                FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+
+                        ((FrameLayout.LayoutParams) layoutParams).setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                    }
         }
 
         uiComponentView.setLayoutParams(layoutParams);
