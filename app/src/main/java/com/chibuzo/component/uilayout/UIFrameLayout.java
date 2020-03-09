@@ -1,5 +1,7 @@
 package com.chibuzo.component.uilayout;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -11,8 +13,8 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
     private UIDimensionController uiDimensionController;
     private com.chibuzo.component.model.UIComponent uiComponent;
 
-    public UIFrameLayout(ViewGroup viewGroup) {
-        super(viewGroup.getContext());
+    public UIFrameLayout(Context context, ViewGroup viewGroup) {
+        super(context);
 
         FrameLayout.LayoutParams frameLayoutParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
@@ -22,7 +24,7 @@ public class UIFrameLayout extends FrameLayout implements UIComponent {
         viewGroup.addView(this);
 
         uiComponent = new com.chibuzo.component.model.UIComponent(this);
-        uiDimensionController = new UIDimensionController(uiComponent);
+        uiDimensionController = new UIDimensionController(this, uiComponent);
 
         uiComponent.setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_MATCH_HEIGHT_PARAMS);
     }

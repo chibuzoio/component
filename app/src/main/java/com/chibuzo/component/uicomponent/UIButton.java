@@ -1,27 +1,26 @@
 package com.chibuzo.component.uicomponent;
 
+import android.content.Context;
 import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.chibuzo.component.control.UIDimensionController;
-import com.chibuzo.component.model.constants.UIComponentParams;
 import com.chibuzo.component.uiinterface.UIComponent;
 
 public class UIButton extends AppCompatButton implements UIComponent {
     private UIDimensionController uiDimensionController;
     private com.chibuzo.component.model.UIComponent uiComponent;
 
-    public UIButton(ViewGroup viewGroup) {
-        super(viewGroup.getContext());
+    public UIButton(Context context, ViewGroup viewGroup) {
+        super(context);
 
         viewGroup.addView(this);
 
         uiComponent = new com.chibuzo.component.model.UIComponent(this);
-        uiDimensionController = new UIDimensionController(uiComponent);
+        uiDimensionController = new UIDimensionController(this, uiComponent);
 
         setUIText("Submit");
-        setUILayoutParamsType(UIComponentParams.MATCH_WIDTH_WRAP_HEIGHT_PARAMS);
     }
 
     @Override

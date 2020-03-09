@@ -1,6 +1,7 @@
 package com.chibuzo.component.control;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -16,9 +17,10 @@ public class UIDimensionController {
     private View uiComponentView;
     private com.chibuzo.component.model.UIComponent uiComponent;
 
-    public UIDimensionController(com.chibuzo.component.model.UIComponent uiComponent) {
+    public UIDimensionController(View uiComponentView,
+                                 com.chibuzo.component.model.UIComponent uiComponent) {
         this.uiComponent = uiComponent;
-        uiComponentView = uiComponent.getUIComponent();
+        this.uiComponentView = uiComponentView;
         context = uiComponentView.getContext();
     }
 
@@ -154,7 +156,7 @@ public class UIDimensionController {
                 uiComponent.getUIMarginRight(), uiComponent.getUIMarginBottom());
     }
 
-    public void resetComponentPosition() {
+    private void resetComponentPosition() {
         uiComponent.setUIMarginTop(AU.dimen(context, 0));
         uiComponent.setUIMarginLeft(AU.dimen(context, 0));
         uiComponent.setUIMarginRight(AU.dimen(context, 0));
@@ -182,6 +184,11 @@ public class UIDimensionController {
         int parentHeight = ((ViewGroup) uiComponentView.getParent()).getHeight();
         int relativeRight = parentWidth - childWidth;
         int relativeBottom = parentHeight - childHeight;
+
+        Log.e("childWidth", "childWidth here is " + childWidth);
+        Log.e("childHeight", "childHeight here is " + childHeight);
+        Log.e("parentWidth", "parentWidth here is " + parentWidth);
+        Log.e("parentHeight", "parentHeight here is " + parentHeight);
 
         switch (uiComponentPosition) {
             case UIComponentPosition.VERTICAL_LEFT:
