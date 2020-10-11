@@ -21,7 +21,7 @@ Where,
 
 Using Gradle;  
 
-Add the repository below to repositories block in your build.gradle (Project: <Project Name>) file: 
+Add the repository below to repositories block in your build.gradle (Project: \<Project Name\>) file: 
 
 ```java
 allprojects { 
