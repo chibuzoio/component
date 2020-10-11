@@ -1,2 +1,2 @@
-# component
+# Component
 Android UI Component Builder
