@@ -114,7 +114,7 @@ The code snippet above was written in the onCreate method of LoginActivity, but 
 
 Setting gravity and layout gravity using this library has been simplified into a single method call. E.g: 
 
-**mainLayoutContainer.setGravity(Gravity.CENTER);**
+**mainLayoutContainer.setGravity(Gravity.CENTER);**               
 **mainLayoutContainer.setLayoutGravity(Gravity.CENTER);**
 
 The two method calls above for setting gravity and layout gravity respectively are responsible for aligning the **mainLayoutContainer** which contains other components to the center of the **scrollViewComponent.** 
