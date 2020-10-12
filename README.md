@@ -44,7 +44,7 @@ dependencies {
 
 Click on ‘Sync Now’ or go to File and click on ‘Sync Project With Gradle Files’. The library will be added automatically into your project.    
 
-### USING COMPONENT LIBRARY 
+### USING COMPONENT LIBRARY              ComponentComponentComponentComponentComponentComponentComponent
 
 Using the LoginActivity below for illustration:    
 
