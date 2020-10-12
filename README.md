@@ -5,7 +5,7 @@ Using Component library, UI components can completely and easily be built progra
 
 Component is primarily based on the formula below, which is enclosed in a utility method named ‘dimen’:       
 
-**dimension = pixel * (densityDPI / DENSITY_DEFAULT)**   
+**dimension = pixel * (densityDPI / DENSITY_DEFAULT)**       
 
 Where, 
 
@@ -30,7 +30,7 @@ allprojects {
 	repositories {
 		…
 		maven {url ‘https://jitpack.io’}
-	}
+	}Component
 }
 ```
 
