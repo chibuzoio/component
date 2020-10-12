@@ -46,7 +46,7 @@ Click on ‘Sync Now’ or go to File and click on ‘Sync Project With Gradle F
 
 Using the LoginActivity below for illustration:    
 
-![Screenshot_20201011_095523](https://user-images.githubusercontent.com/61406807/95689963-62b37100-0c0c-11eb-95c3-640ad3d304a5.jpg)   
+![login_activity](https://user-images.githubusercontent.com/61406807/95712101-1001a580-0c5c-11eb-98f4-aeaf1810fc0a.png)         
 
 The code below is responsible for the arrangement of the Activity above: 
 
