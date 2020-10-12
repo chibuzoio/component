@@ -3,7 +3,7 @@ Component is a user interface builder library that eliminates the tedious works 
 
 Using Component library, UI components can completely and easily be built programmatically without using layout resources (xml). Though you can use layout resources (xml) alongside building components programmatically using Component library, but it's not necessary. Sticking to building UI components programmatically using Component library alone if you are using Component library will help simplify your work.     
 
-Component is primarily based on the formula below, which is enclosed in a utility method named ‘dimen’: 
+Component is primarily based on the formula below, which is enclosed in a utility method named ‘dimen’:     
 
 **dimension = pixel * (densityDPI / DENSITY_DEFAULT)**   
 
