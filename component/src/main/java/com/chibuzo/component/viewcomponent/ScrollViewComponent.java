@@ -9,6 +9,7 @@ import com.chibuzo.component.utility.AU;
 
 public class ScrollViewComponent extends ScrollView {
     private float layoutWeight;
+    private ViewGroup viewGroup;
     private GenericLayoutParams genericLayoutParams;
 
     public ScrollViewComponent(ViewGroup viewGroup) {
@@ -17,6 +18,8 @@ public class ScrollViewComponent extends ScrollView {
         int horizontalParam = GenericLayoutParams.MATCH_PARENT;
         int verticalParam = GenericLayoutParams.MATCH_PARENT;
 
+        this.viewGroup = viewGroup;
+
         genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
 
         setLayoutParams(genericLayoutParams.getLayoutParams());
@@ -24,6 +27,11 @@ public class ScrollViewComponent extends ScrollView {
         setVerticalScrollBarEnabled(false);
 
         viewGroup.addView(this);
+    }
+
+    public void setLayoutParams(int horizontalParam, int verticalParam) {
+        genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
+        setLayoutParams(genericLayoutParams.getLayoutParams());
     }
 
     public void setLayoutGravity(int gravity) {
@@ -42,8 +50,8 @@ public class ScrollViewComponent extends ScrollView {
         this.layoutWeight = layoutWeight;
     }
 
-    public void setPadding(float left, float top, float right, float bottom) {
-        setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
+    public void setPadding(int left, int top, int right, int bottom) {
+        super.setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
                 AU.dimen(getContext(), right), AU.dimen(getContext(), bottom));
     }
 

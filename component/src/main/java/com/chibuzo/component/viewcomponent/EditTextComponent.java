@@ -17,6 +17,7 @@ import com.chibuzo.component.utility.AU;
 public class EditTextComponent extends AppCompatEditText {
     private float layoutWeight;
     private int editorInputType;
+    private ViewGroup viewGroup;
     private GenericLayoutParams genericLayoutParams;
 
     public static final int INPUT_TYPE_TEXT = 0;
@@ -36,6 +37,8 @@ public class EditTextComponent extends AppCompatEditText {
         int horizontalParam = GenericLayoutParams.MATCH_PARENT;
         int verticalParam = GenericLayoutParams.WRAP_CONTENT;
 
+        this.viewGroup = viewGroup;
+
         genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
 
         genericLayoutParams.getLayoutParams().height = AU.dimen(getContext(), 43);
@@ -52,6 +55,11 @@ public class EditTextComponent extends AppCompatEditText {
         ViewCompat.setBackground(this, ContextCompat.getDrawable(getContext(), R.drawable.generic_edit_text));
 
         viewGroup.addView(this);
+    }
+
+    public void setLayoutParams(int horizontalParam, int verticalParam) {
+        genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
+        setLayoutParams(genericLayoutParams.getLayoutParams());
     }
 
     public void setLayoutGravity(int gravity) {
@@ -82,8 +90,9 @@ public class EditTextComponent extends AppCompatEditText {
         this.layoutWeight = layoutWeight;
     }
 
-    public void setPadding(float left, float top, float right, float bottom) {
-        setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
+        super.setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
                 AU.dimen(getContext(), right), AU.dimen(getContext(), bottom));
     }
 

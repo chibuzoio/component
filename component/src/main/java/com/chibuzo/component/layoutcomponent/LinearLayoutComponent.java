@@ -14,6 +14,7 @@ import com.chibuzo.component.utility.AU;
 
 public abstract class LinearLayoutComponent extends LinearLayout {
     private float layoutWeight;
+    private ViewGroup viewGroup;
     private GenericLayoutParams genericLayoutParams;
 
     public LinearLayoutComponent(Context context, ViewGroup viewGroup,
@@ -28,7 +29,13 @@ public abstract class LinearLayoutComponent extends LinearLayout {
 
         if (viewGroup != null) {
             viewGroup.addView(this);
+            this.viewGroup = viewGroup;
         }
+    }
+
+    public void setLayoutParams(int horizontalParam, int verticalParam) {
+        genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
+        setLayoutParams(genericLayoutParams.getLayoutParams());
     }
 
     public void setLayoutGravity(int gravity) {
@@ -79,8 +86,9 @@ public abstract class LinearLayoutComponent extends LinearLayout {
         this.layoutWeight = layoutWeight;
     }
 
-    public void setPadding(float left, float top, float right, float bottom) {
-        setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
+        super.setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
                 AU.dimen(getContext(), right), AU.dimen(getContext(), bottom));
     }
 

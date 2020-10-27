@@ -15,10 +15,11 @@ import com.chibuzo.component.utility.AU;
 
 public class FrameLayoutComponent extends FrameLayout {
     private float layoutWeight;
+    private ViewGroup viewGroup;
     private GenericLayoutParams genericLayoutParams;
 
-    public FrameLayoutComponent(Context context, int horizontalParams, int verticalParams) {
-        this(context, null, horizontalParams, verticalParams);
+    public FrameLayoutComponent(Context context, int horizontalParam, int verticalParam) {
+        this(context, null, horizontalParam, verticalParam);
     }
 
     public FrameLayoutComponent(Context context, ViewGroup viewGroup,
@@ -33,7 +34,13 @@ public class FrameLayoutComponent extends FrameLayout {
 
         if (viewGroup != null) {
             viewGroup.addView(this);
+            this.viewGroup = viewGroup;
         }
+    }
+
+    public void setLayoutParams(int horizontalParam, int verticalParam) {
+        genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
+        setLayoutParams(genericLayoutParams.getLayoutParams());
     }
 
     public void setLayoutGravity(int gravity) {
@@ -71,7 +78,8 @@ public class FrameLayoutComponent extends FrameLayout {
         this.layoutWeight = layoutWeight;
     }
 
-    public void setPadding(float left, float top, float right, float bottom) {
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
         super.setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
                 AU.dimen(getContext(), right), AU.dimen(getContext(), bottom));
     }

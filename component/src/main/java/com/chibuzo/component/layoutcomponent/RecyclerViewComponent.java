@@ -1,5 +1,6 @@
 package com.chibuzo.component.layoutcomponent;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.ViewGroup;
@@ -14,13 +15,16 @@ import com.chibuzo.component.utility.AU;
 
 public class RecyclerViewComponent extends RecyclerView {
     private float layoutWeight;
+    private ViewGroup viewGroup;
     private GenericLayoutParams genericLayoutParams;
 
-    public RecyclerViewComponent(ViewGroup viewGroup) {
-        super(viewGroup.getContext());
+    public RecyclerViewComponent(Context context, int horizontalParam, int verticalParam) {
+        this(context, null, horizontalParam, verticalParam);
+    }
 
-        int horizontalParam = GenericLayoutParams.MATCH_PARENT;
-        int verticalParam = GenericLayoutParams.MATCH_PARENT;
+    public RecyclerViewComponent(Context context, ViewGroup viewGroup,
+                                 int horizontalParam, int verticalParam) {
+        super(viewGroup.getContext());
 
         genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
 
@@ -29,6 +33,13 @@ public class RecyclerViewComponent extends RecyclerView {
         setFocusableInTouchMode(true);
 
         viewGroup.addView(this);
+
+        this.viewGroup = viewGroup;
+    }
+
+    public void setLayoutParams(int horizontalParam, int verticalParam) {
+        genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
+        setLayoutParams(genericLayoutParams.getLayoutParams());
     }
 
     public void setLayoutGravity(int gravity) {

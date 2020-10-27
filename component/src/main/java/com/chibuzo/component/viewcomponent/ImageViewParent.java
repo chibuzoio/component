@@ -23,6 +23,7 @@ import java.io.File;
 public abstract class ImageViewParent extends AppCompatImageView {
     protected Object object;
     private float layoutWeight;
+    private ViewGroup viewGroup;
     protected int cornerRadius, placeholder;
     protected GenericLayoutParams genericLayoutParams;
 
@@ -51,6 +52,7 @@ public abstract class ImageViewParent extends AppCompatImageView {
 
         this.cornerRadius = cornerRadius;
         this.placeholder = placeholder;
+        this.viewGroup = viewGroup;
         this.object = object;
 
         genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
@@ -76,6 +78,11 @@ public abstract class ImageViewParent extends AppCompatImageView {
         }
 
         viewGroup.addView(this);
+    }
+
+    public void setLayoutParams(int horizontalParam, int verticalParam) {
+        genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
+        setLayoutParams(genericLayoutParams.getLayoutParams());
     }
 
     public void setLayoutGravity(int gravity) {
@@ -381,7 +388,8 @@ public abstract class ImageViewParent extends AppCompatImageView {
         this.layoutWeight = layoutWeight;
     }
 
-    public void setPadding(float left, float top, float right, float bottom) {
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
         super.setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
                 AU.dimen(getContext(), right), AU.dimen(getContext(), bottom));
     }

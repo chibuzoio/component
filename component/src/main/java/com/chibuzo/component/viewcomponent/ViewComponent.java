@@ -13,6 +13,7 @@ import com.chibuzo.component.utility.AU;
 
 public class ViewComponent extends View {
     private int componentColor;
+    private ViewGroup viewGroup;
     private GenericLayoutParams genericLayoutParams;
     private float componentWidth, componentHeight, layoutWeight;
 
@@ -28,11 +29,17 @@ public class ViewComponent extends View {
 
         this.componentHeight = componentHeight;
         this.componentColor = componentColor;
+        this.viewGroup = viewGroup;
 
         setComponentHeight(componentHeight);
         setComponentColor(componentColor);
 
         viewGroup.addView(this);
+    }
+
+    public void setLayoutParams(int horizontalParam, int verticalParam) {
+        genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
+        setLayoutParams(genericLayoutParams.getLayoutParams());
     }
 
     public void setLayoutGravity(int gravity) {
