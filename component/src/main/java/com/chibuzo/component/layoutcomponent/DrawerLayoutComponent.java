@@ -23,6 +23,11 @@ public class DrawerLayoutComponent extends DrawerLayout {
         setFocusableInTouchMode(true);
     }
 
+    public void setLayoutParams(int horizontalParam, int verticalParam) {
+        genericLayoutParams = new GenericLayoutParams(null, horizontalParam, verticalParam);
+        setLayoutParams(genericLayoutParams.getLayoutParams());
+    }
+
     public void setComponentColor(int color) {
         setBackgroundColor(ContextCompat.getColor(getContext(), color));
     }

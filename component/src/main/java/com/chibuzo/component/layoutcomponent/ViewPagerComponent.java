@@ -14,7 +14,12 @@ import com.chibuzo.component.utility.AU;
 
 public class ViewPagerComponent extends ViewPager {
     private float layoutWeight;
+    private ViewGroup viewGroup;
     private GenericLayoutParams genericLayoutParams;
+
+    public ViewPagerComponent(Context context, int horizontalParam, int verticalParam) {
+        this(context, null, horizontalParam, verticalParam);
+    }
 
     public ViewPagerComponent(@NonNull Context context,
                               ViewGroup viewGroup, int horizontalParam, int verticalParam) {
@@ -29,7 +34,13 @@ public class ViewPagerComponent extends ViewPager {
 
         if (viewGroup != null) {
             viewGroup.addView(this);
+            this.viewGroup = viewGroup;
         }
+    }
+
+    public void setLayoutParams(int horizontalParam, int verticalParam) {
+        genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
+        setLayoutParams(genericLayoutParams.getLayoutParams());
     }
 
     public void setLayoutGravity(int gravity) {
@@ -55,8 +66,9 @@ public class ViewPagerComponent extends ViewPager {
         this.layoutWeight = layoutWeight;
     }
 
-    public void setPadding(float left, float top, float right, float bottom) {
-        setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
+        super.setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
                 AU.dimen(getContext(), right), AU.dimen(getContext(), bottom));
     }
 

@@ -72,7 +72,7 @@ public class RoundElevatedPicture extends FrameLayoutComponent {
         roundedPicturePalette.setMargins(allSides, allSides, allSides, allSides);
     }
 
-    public void setPalettePadding(float allSides) {
+    public void setPalettePadding(int allSides) {
         roundedPicturePalette.setPadding(allSides, allSides, allSides, allSides);
     }
 

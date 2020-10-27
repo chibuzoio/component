@@ -45,13 +45,19 @@ public class AU {
     }
 
     public static GradientDrawable curveBackgroundCorner(Context context, float cornerRadius) {
-        return curveBackgroundCorner(context, cornerRadius, R.color.whiteColor);
+        return curveBackgroundCorner(context, R.color.whiteColor, cornerRadius);
     }
 
-    public static GradientDrawable curveBackgroundCorner(Context context, float cornerRadius, int color) {
+    public static GradientDrawable curveBackgroundCorner(Context context, int color, float cornerRadius) {
+        return curveBackgroundCorner(context, color, cornerRadius, cornerRadius, cornerRadius, cornerRadius);
+    }
+
+    public static GradientDrawable curveBackgroundCorner(Context context, int color, float leftTop,
+                                                         float rightTop, float rightBottom, float leftBottom) {
         GradientDrawable gradientDrawable = new GradientDrawable();
         gradientDrawable.setColor(ContextCompat.getColor(context, color));
-        gradientDrawable.setCornerRadius(dimen(context, cornerRadius));
+        gradientDrawable.setCornerRadii(new float[]{leftTop, leftTop,
+                rightTop, rightTop, rightBottom, rightBottom, leftBottom, leftBottom});
         return gradientDrawable;
     }
 

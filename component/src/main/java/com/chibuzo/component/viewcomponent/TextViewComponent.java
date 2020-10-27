@@ -16,6 +16,7 @@ import com.chibuzo.component.utility.AU;
 
 public class TextViewComponent extends AppCompatTextView {
     private float layoutWeight;
+    private ViewGroup viewGroup;
     private int alignment, textViewColor;
     private GenericLayoutParams genericLayoutParams;
 
@@ -40,6 +41,8 @@ public class TextViewComponent extends AppCompatTextView {
         int horizontalParam = GenericLayoutParams.MATCH_PARENT;
         int verticalParam = GenericLayoutParams.WRAP_CONTENT;
 
+        this.viewGroup = viewGroup;
+
         genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
 
         setLayoutParams(genericLayoutParams.getLayoutParams());
@@ -51,6 +54,11 @@ public class TextViewComponent extends AppCompatTextView {
         setTextSize(AU.dimen(viewGroup.getContext(), textSize));
 
         viewGroup.addView(this);
+    }
+
+    public void setLayoutParams(int horizontalParam, int verticalParam) {
+        genericLayoutParams = new GenericLayoutParams(viewGroup, horizontalParam, verticalParam);
+        setLayoutParams(genericLayoutParams.getLayoutParams());
     }
 
     public int getTextViewColor() {
@@ -90,8 +98,9 @@ public class TextViewComponent extends AppCompatTextView {
         this.layoutWeight = layoutWeight;
     }
 
-    public void setPadding(float left, float top, float right, float bottom) {
-        setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
+        super.setPadding(AU.dimen(getContext(), left), AU.dimen(getContext(), top),
                 AU.dimen(getContext(), right), AU.dimen(getContext(), bottom));
     }
 
