@@ -29,7 +29,7 @@ public class ButtonComponent extends VerticalLinearLayout {
 
         getGenericLayoutParams().getLayoutParams().height = AU.dimen(viewGroup.getContext(), 47);
 
-        setDrawable(AU.curveBackgroundCorner(viewGroup.getContext(), 11.111f, R.color.royalBlue));
+        setDrawable(AU.curveBackgroundCorner(viewGroup.getContext(), R.color.royalBlue, 11.111f));
         setGravity(Gravity.CENTER);
 
         setButtonLabel();
