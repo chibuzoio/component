@@ -24,6 +24,8 @@ public class RoundElevatedPicture extends FrameLayoutComponent {
 
         this.imageObject = imageObject;
         this.imageSize = imageSize;
+        
+        setFocusableInTouchMode(false);
 
         setRoundedPicturePalette();
     }

@@ -41,6 +41,7 @@ public class IconLabelButton extends HorizontalLinearLayout {
         getGenericLayoutParams().getLayoutParams().height = AU.dimen(context, 47);
 
         setBackground(R.drawable.generic_button);
+        setFocusableInTouchMode(false);
         setGravity(Gravity.CENTER);
 
         setButtonIcon(drawable);
