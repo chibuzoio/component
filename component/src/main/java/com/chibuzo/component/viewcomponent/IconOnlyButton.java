@@ -31,6 +31,7 @@ public class IconOnlyButton extends VerticalLinearLayout {
 
         setBackground(R.drawable.generic_round_corner);
         setPadding(7, 7, 7, 7);
+        setFocusableInTouchMode(false);
         setGravity(Gravity.CENTER);
         setElevation(15);
 

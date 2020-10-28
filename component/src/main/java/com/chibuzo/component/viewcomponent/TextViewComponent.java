@@ -50,6 +50,7 @@ public class TextViewComponent extends AppCompatTextView {
         setText(text);
         setAlignment(alignment);
         setTextStyle(textStyle);
+        setFocusableInTouchMode(false);
         setTextViewColor(R.color.genericBlackColor);
         setTextSize(AU.dimen(viewGroup.getContext(), textSize));
 

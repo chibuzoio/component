@@ -31,6 +31,7 @@ public class IconTextMenuComponent extends VerticalLinearLayout {
                 GenericLayoutParams.MATCH_PARENT, GenericLayoutParams.WRAP_CONTENT);
 
         setComponentColor(R.color.whiteColor);
+        setFocusableInTouchMode(false);
 
         this.menuIcon = menuIcon;
         this.menuLabel = menuLabel;
