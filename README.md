@@ -38,7 +38,7 @@ Add the dependency below to dependencies block in your build.gradle (Module: app
 
 ```java
 dependencies {
-	implementation ‘com.github.chibuzoio:component:1.0.1’     
+	implementation ‘com.github.chibuzoio:component:1.0.4’     
 }      
 ```
 
